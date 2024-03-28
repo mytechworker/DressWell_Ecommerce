@@ -1,0 +1,121 @@
+.home-page {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.tabs a b {
+  color: rgb(0, 53, 100) !important;
+  font-size: larger;
+}
+
+nav A {
+  border: 2px solid rgb(0, 50, 94);
+  margin: 10px 30px 0px 30px;
+  border-radius: 20px;
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+
+.list {
+  margin: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+}
+
+.item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  width: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  h2 {
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+
+  .product-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin-bottom: 4px;
+  }
+
+  .buttons-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  button {
+    background-color: #2196F3;
+    color: #fff;
+  }
+}
+
+.empty-label {
+  font-size: 16px;
+  color: #555;
+}
+
+
+.slider {
+  width: 100%;
+}
+
+.mat-slider-horizontal {
+  height: auto;
+}
+
+.mat-slider-thumb-label {
+  color: #000;
+}
+
+.mat-slider-ticks {
+  display: none;
+}
+
+.mat-slider-track {
+  background-color: #ccc;
+}
+
+.mat-slider-thumb {
+  background-color: #007bff;
+}
+
+/* Adjust the position of the navigation links */
+.mat-slider-horizontal {
+  margin-bottom: 20px;
+}
+
+.mat-slider-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.mat-slider-tick {
+  display: none;
+}
+
+.mat-slider-tick-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mat-slider-tick:last-child {
+  display: block;
+}

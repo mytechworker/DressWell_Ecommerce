@@ -1,0 +1,51 @@
+<app-header></app-header>
+<div class="container">
+  <div class="product-details">
+    <h2>{{ product.name }}</h2>
+    <div class="image-container">
+      <lib-ngx-image-zoom class="product-image" [thumbImage]="product.image" [magnification]="3"
+        [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="300" [lensHeight]="200"></lib-ngx-image-zoom>
+    </div>
+    <div class="wishlist-button">
+      <button mat-icon-button (click)="addToWishlist(product)">
+        <mat-icon [ngStyle]="{'font-size.px': 26, 'color': isAddedToWishlist ? 'red' : 'grey'}">
+          {{ isAddedToWishlist ? 'favorite' : 'favorite_border' }}
+        </mat-icon>
+      </button>
+    </div>
+    <div class="details">
+      <p><b>Price:</b> {{ product.price | currency: '₹' }}</p>
+      <p><b>Color:</b> {{ product.color }}</p>
+      <p><b>Category:</b> {{ product.category }}</p>
+      <p class="description"><b>Description:</b> {{ product.description }}</p>
+      <div class="buttons-container">
+        <button mat-raised-button class="primary" (click)="buyProduct()">Buy Now</button>
+      </div>
+      <div class="buttons-container">
+        <button mat-raised-button class="primary" (click)="addToCart()">Add to Cart</button>
+      </div>
+      <div>
+        <p><b>Your Rating:</b></p>
+        <div class="stars-container">
+          <div *ngFor="let star of stars"
+            [ngClass]="{'star-gold': star.id <= selectedRating, 'star-gray': star.id > selectedRating}" class="star"
+            (click)="selectStar(star.id)">
+            <mat-icon>{{star.icon}}</mat-icon>
+          </div>
+          <span>{{ selectedRating }}</span>
+        </div>
+      </div>
+
+      <div>
+        <p><b>Average Rating:</b></p>
+        <div class="stars-container">
+          <div *ngFor="let star of stars"
+            [ngClass]="{'star-gold': star.id <= averageRating, 'star-gray': star.id > averageRating}" class="star">
+            <mat-icon>{{star.icon}}</mat-icon>
+          </div>
+          <span>{{ averageRating.toFixed(1) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

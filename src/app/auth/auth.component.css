@@ -1,0 +1,40 @@
+mat-form-field {
+  width: 97%;
+  padding-left: 10px;
+  padding-top: 20px;
+}
+
+h1 {
+  font-family: Lato;
+  color: rgb(241, 240, 237);
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  border: 5px black solid;
+  max-width: 700px;
+  margin: 10em auto;
+  text-align: center;
+  height: 580px;
+  background-image: linear-gradient(rgb(0, 0, 243), rgb(76, 73, 252), rgb(70, 183, 248));
+}
+
+button {
+  background-color: black;
+  height: 30px;
+  width: 30%;
+  margin: 0 auto;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+}
+
+.forgot-password {
+  cursor: pointer;
+
+}

@@ -1,0 +1,19 @@
+.order-summary-card {
+  width: 300px;
+  margin: 20px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-summary-card h1 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.order-summary-card p {
+  margin: 8px 0;
+}
+
+.order-total {
+  color: rgb(238, 112, 10);
+}

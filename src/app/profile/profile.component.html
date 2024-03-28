@@ -1,0 +1,36 @@
+<app-header></app-header>
+<mat-card>
+  <mat-icon class="account_circle">account_circle</mat-icon>
+
+  <div class="name" *ngIf="userForm && userForm.valid">
+    <div>
+      <h1>Welcome, {{ userForm.get('name').value }}</h1>
+    </div>
+    <div>
+      <h2>Full Name: {{ userForm.get('name').value }}</h2>
+    </div>
+    <div>
+      <h2>Mobile: {{ userForm.get('mobile').value }}</h2>
+    </div>
+    <div>
+      <h2>Email: {{ userForm.get('email').value }}</h2>
+    </div>
+    <div>
+      <h2>D.O.B: {{ userForm.get('dob').value }}</h2>
+    </div>
+    <h2>
+      <div *ngFor="let address of addresses">
+        <h4>Address: </h4>
+        {{ address.house }}, {{ address.area }}, {{ address.landmark }},
+        {{ address.city }}, {{ address.state }}, {{ address.country }},
+        {{ address.pincode }}
+      </div>
+    </h2>
+  </div>
+  <div *ngIf="userForm && userForm.invalid">
+    <p>Please complete the form with valid data.</p>
+  </div>
+  <div *ngIf="!userForm">
+    <p>Loading user form data...</p>
+  </div>
+</mat-card>

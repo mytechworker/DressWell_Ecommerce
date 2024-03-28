@@ -1,0 +1,27 @@
+h2 {
+    font-size: 36px;
+    color: #000122;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container.mt-5 {
+    margin-top: 50px;
+    background-color: white;
+    width: 920px;
+}
+
+button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    cursor: pointer;
+}

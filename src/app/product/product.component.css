@@ -1,0 +1,48 @@
+ .list {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 16px;
+ }
+
+ .item {
+   border: 1px solid #ccc;
+   border-radius: 8px;
+   padding: 16px;
+   width: 250px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   transition: box-shadow 0.3s ease;
+
+   &:hover {
+     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+   }
+
+   h2 {
+     margin-bottom: 8px;
+     font-size: 18px;
+   }
+
+   .product-image {
+     max-width: 100%;
+     height: auto;
+     margin-bottom: 8px;
+   }
+
+   p {
+     margin-bottom: 4px;
+   }
+
+   .buttons-container {
+     display: flex;
+     justify-content: space-between;
+   }
+
+   button {
+     background-color: #2196F3;
+     color: #fff;
+   }
+ }
+
+ .empty-label {
+   font-size: 16px;
+   color: #555;
+ }

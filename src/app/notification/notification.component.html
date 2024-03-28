@@ -1,0 +1,10 @@
+<app-header></app-header>
+
+<div *ngFor="let notification of notifications" class="notification-item">
+  <div
+    [ngClass]="{'order-accepted': notification.type === 'order_accepted','order-declined': notification.type === 'order_declined'}">
+    <span [innerHTML]="notification.message"></span>
+    <br>
+    <button class="btn btn-primary btn-block" (click)="openPDF(notification)">Open PDF</button>
+  </div>
+</div>

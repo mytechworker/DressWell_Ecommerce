@@ -1,0 +1,27 @@
+<app-header></app-header>
+<mat-toolbar>
+    <nav mat-tab-nav-bar class="tabs" [tabPanel]="tabPanel">
+        <p><b>CHECKOUT</b></p>
+    </nav>
+</mat-toolbar>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+
+<div class="container-wrapper">
+    <div class="container">
+        <mat-card>
+            <span><b>Your Address: {{fulladdress}}</b></span>
+            <app-address-adds></app-address-adds>
+            <p *ngIf="task">{{currentUser}}</p>
+            <button (click)="isAddressRight()">Use this Address?</button>
+        </mat-card>
+    </div>
+    <app-orders></app-orders>
+</div>
+<div class="container-wrapper" *ngIf="isAddress">
+    <app-payment></app-payment>
+</div>
+
+<div class="col-md-4 text-right">
+    <button class="btn btn-success btn-block" (click)="generatePDF()">Download PDF</button>
+    <button class="btn btn-primary btn-block" (click)="openPDF()">Open PDF</button> <!-- Add this button -->
+</div>

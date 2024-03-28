@@ -1,0 +1,48 @@
+.notification-container {
+  position: fixed;
+  top: 16px;
+  right: 160px;
+  z-index: 1000;
+}
+
+.notification-item {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 8px;
+  max-width: 800px;
+  padding: 16px;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.order-accepted {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #3c763d;
+}
+
+.order-declined {
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}
+
+.read {
+  opacity: 0.6;
+}
+
+button {
+  background-color: #003d18;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top: 15px;
+  margin-left: 20px;
+  width: 120px;
+}
+
+button:hover {
+  background-color: #004080;
+}

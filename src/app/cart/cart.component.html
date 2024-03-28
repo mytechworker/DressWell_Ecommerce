@@ -1,0 +1,40 @@
+<app-header></app-header>
+<div class="container-wrapper">
+  <div class="container">
+    <h1>CART</h1>
+    <mat-card class="item" *ngFor="let item of cartItems">
+      <h2>{{ item.name }}</h2>
+      <img [src]="item.image" alt="Product Image" class="product-image">
+      <p><b>Price:</b> {{ item.price | currency: '₹' }}</p>
+      <p><b>Color:</b> {{ item.color }}</p>
+      <p><b>Category:</b> {{ item.category }}</p>
+      <p><b>Description:</b> {{ item.description }}</p>
+      <p><b>Total Price:</b> {{ item.price * item.count | currency: '₹' }}</p>
+      <p><b>Count:</b>
+        <button mat-icon-button color="primary" *ngIf="item.count > 1" (click)="removeCart(item)">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" *ngIf="item.count === 1" (click)="removeCart(item)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        {{ item.count }}
+        <button mat-icon-button color="primary" (click)="addToCart(item)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </p>
+    </mat-card>
+    <mat-card class="order-summary-card">
+      <mat-card-title>
+        <h1><b>Order Summary</b></h1>
+      </mat-card-title>
+      <mat-card-content>
+        <div>
+          <p><b>SubTotal ({{totalItems}} Items) : {{ (totalAmount ) | currency: '₹' }} </b></p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <div class="buttons-container">
+      <button mat-raised-button color="primary" (click)="buyProduct()">Proceed to Buy</button>
+    </div>
+  </div>
+</div>

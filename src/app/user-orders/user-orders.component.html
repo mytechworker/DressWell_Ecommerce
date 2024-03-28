@@ -1,0 +1,43 @@
+<app-header></app-header>
+<div>
+  <h2>Your Orders</h2>
+  <div class="col-md-4 text-right">
+    <button class="btn btn-success btn-block" (click)="generatePDF()">Download PDF</button>
+    <button class="btn btn-primary btn-block" (click)="openPDF()">Open PDF</button>
+  </div>
+  <div *ngFor="let order of acceptedOrders$ | async;  let i = index">
+    <mat-card class="item">
+      <mat-card-content>
+        <h3>{{ i + 1 }} )</h3>
+        <p><b>Total Amount: </b> {{ order.totalAmount | currency: '₹' }}</p>
+        <p><b>Order ID: </b> {{ order.id }}</p>
+        <b>Your Order's List: </b>
+        <table mat-table [dataSource]="order.items" class="mat-elevation-z8">
+
+          <ng-container matColumnDef="sr-no">
+            <th mat-header-cell *matHeaderCellDef>Sr No.</th>
+            <td mat-cell *matCellDef="let task; let i = index">{{ i + 1 }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Product Name</th>
+            <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Price</th>
+            <td mat-cell *matCellDef="let product">{{ product.price | currency: '₹' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef>Count</th>
+            <td mat-cell *matCellDef="let product">{{ product.count }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['sr-no','name', 'price', 'count']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['sr-no','name', 'price', 'count'];"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

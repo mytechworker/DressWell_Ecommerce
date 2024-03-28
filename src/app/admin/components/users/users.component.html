@@ -1,0 +1,58 @@
+<div>
+  <mat-form-field class="search" appearance="fill">
+    <span matPrefix>
+      <mat-icon matPrefix>search</mat-icon>
+    </span>
+    <mat-label>Search Something</mat-label>
+    <input type="tel" matInput placeholder="" search (keyup)="applyFilter($event)" #input />
+  </mat-form-field>
+  <mat-table mat-table matSort [dataSource]="dataSource">
+    <ng-container matColumnDef="sr-no">
+      <mat-header-cell *matHeaderCellDef>Sr No.</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{ user.serialNo}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>User Name</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{ user.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <div *ngIf="user.addresses && user.addresses.length > 0; else noAddress">
+          <div *ngFor="let address of user.addresses">
+            <p>
+              {{ address.house }}, {{ address.area }}, {{ address.landmark }},
+              {{ address.city }}, {{ address.state }}, {{ address.country }},
+              {{ address.pincode }}
+            </p>
+          </div>
+        </div>
+        <ng-template #noAddress>
+          <p class="noaddress">No addresses available</p>
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{ user.email }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="toggle">
+      <mat-header-cell *matHeaderCellDef>Access</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <mat-slide-toggle [(ngModel)]="user.access" (change)="toggleAccess(user)" [disabled]="user.email === 'pratima@gmail.com'"></mat-slide-toggle>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="['sr-no','name','address' ,'email', 'toggle']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['sr-no','name','address' , 'email', 'toggle']"></mat-row>
+    <tr *matNoDataRow>
+      <td class="mat-cell" colspan="4">The filter does not match any item in the data for this text:
+        "<b>{{input.value}}</b>"</td>
+    </tr>
+  </mat-table>
+  <mat-paginator class="m" [pageSizeOptions]="[5,10,25,100]" showFirstLastButtons></mat-paginator>
+</div>

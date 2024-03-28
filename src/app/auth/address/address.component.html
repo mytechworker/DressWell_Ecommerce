@@ -1,0 +1,46 @@
+<div class="example-container">
+    <h1>Add a New Address</h1>
+    <mat-form-field>
+        <mat-label>Country/Region</mat-label>
+        <input matInput [(ngModel)]="data.task.country" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Pincode</mat-label>
+        <input matInput [(ngModel)]="data.task.pincode" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Flat, House no., Building, Company, Apartment</mat-label>
+        <input matInput [(ngModel)]="data.task.house" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Area, Street, Sector, Village</mat-label>
+        <input matInput [(ngModel)]="data.task.area" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Landmark</mat-label>
+        <input matInput [(ngModel)]="data.task.landmark" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Town/City</mat-label>
+        <input matInput [(ngModel)]="data.task.city" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>State</mat-label>
+        <input matInput [(ngModel)]="data.task.state" />
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="{ task: data.task  }">OK</button>
+        <button mat-button (click)="cancel()">Cancel</button>
+        <button *ngIf="data.enableDelete" color="primary" aria-label="Delete"
+            [mat-dialog-close]="{ task: data.task, delete: true }">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>

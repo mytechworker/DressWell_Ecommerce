@@ -1,0 +1,18 @@
+<mat-card class="item">
+    <div *ngIf="addresses.length > 0">
+        <div *ngFor="let address of addresses">
+            <p>
+                {{ address.house }}, {{ address.area }}, {{ address.landmark }},
+                {{ address.city }}, {{ address.state }}, {{ address.country }},
+                {{ address.pincode }}
+            </p>
+            <button mat-icon-button (click)="edit.emit(address)">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="addresses.length === 0">
+        <p>No addresses available</p>
+    </div>
+</mat-card>

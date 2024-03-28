@@ -1,0 +1,14 @@
+<mat-card class="order-summary-card">
+  <mat-card-title>
+    <h1><b>Order Summary</b></h1>
+  </mat-card-title>
+  <mat-card-content>
+    <div>
+      <p>Items: {{ totalAmount | currency: '₹' }}</p>
+      <p>Delivery Charge: ₹120.00</p>
+    </div>
+    <hr>
+    <p class="order-total"><b>Order Total: {{ totalAmount + 120.00 | currency: '₹' }}</b></p>
+  </mat-card-content>
+  <button mat-raised-button color="primary" (click)="placeOrder()">Place the Order?</button>
+</mat-card>

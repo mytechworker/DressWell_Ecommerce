@@ -1,0 +1,43 @@
+<mat-form-field appearance="fill">
+  <mat-label>Category</mat-label>
+  <mat-select [(value)]="selectedCategory" (selectionChange)="categoryChange($event.value)">
+    <mat-option *ngFor="let category of categories" [value]="category.id">
+      {{ category.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<button class="add-category" (click)="newCategory()" mat-button>
+  <mat-icon>add</mat-icon> Add New SubCategory
+</button>
+
+<mat-table class="category-table" [dataSource]="subcategory | async">
+  <ng-container matColumnDef="sr-no">
+    <mat-header-cell *matHeaderCellDef>Sr No.</mat-header-cell>
+    <mat-cell *matCellDef="let task; let i = index">{{ i + 1 }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="url">
+    <mat-header-cell *matHeaderCellDef>URL</mat-header-cell>
+    <mat-cell *matCellDef="let task" class="url-column">
+      <a (click)="navigateToExternalUrl(task.url)" target="_blank">{{ task.url }}</a>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let task">{{ task.name }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+    <mat-cell *matCellDef="let task">
+      <button mat-icon-button (click)="editCategory('subcategory', task)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="['sr-no', 'url', 'name', 'actions']"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: ['sr-no', 'url', 'name', 'actions'];"></mat-row>
+</mat-table>

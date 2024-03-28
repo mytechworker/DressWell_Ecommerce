@@ -1,0 +1,56 @@
+<div class="product-form">
+    <h1 *ngIf="!data.enableDelete">Add Product</h1>
+
+    <h1 *ngIf="data.enableDelete">Edit Product</h1>
+    <mat-form-field>
+        <mat-label>Image</mat-label>
+        <textarea matInput cdkFocusInitial [(ngModel)]="data.task.image"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="data.task.name" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Price</mat-label>
+        <input matInput [(ngModel)]="data.task.price" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Color</mat-label>
+        <input matInput [(ngModel)]="data.task.color" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" *ngIf="!data.enableDelete">
+        <mat-label>Category</mat-label>
+        <mat-select [(value)]="selectedCategory" (selectionChange)="categoryChange($event.value)">
+            <mat-option *ngFor="let category of categories" [value]="category.name">
+                {{ category.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" *ngIf="data.enableDelete">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="selectedCategory" (selectionChange)="categoryChange($event.value)">
+            <mat-option *ngFor="let category of categories" [value]="category.name">
+                {{ category.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="data.task.description"></textarea>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="{ task: data.task }">OK</button>
+        <button mat-button (click)="cancel()">Cancel</button>
+        <button *ngIf="data.enableDelete" mat-fab color="primary" aria-label="Delete"
+            [mat-dialog-close]="{ task: data.task, delete: true }">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>

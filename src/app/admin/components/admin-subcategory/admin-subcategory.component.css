@@ -1,0 +1,22 @@
+.category-table {
+  width: 800px;
+  margin-top: 20px;
+}
+
+.mat-cell,
+.mat-header-cell {
+  padding: 18px;
+  text-align: left;
+}
+
+.url-column {
+  max-width: 350px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.add-category {
+  margin-top: 10px;
+  background-color: rgb(6, 169, 233);
+}

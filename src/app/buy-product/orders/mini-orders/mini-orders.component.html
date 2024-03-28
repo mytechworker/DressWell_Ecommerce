@@ -1,0 +1,39 @@
+<mat-card class="item" (dblclick)="edit.emit(task)">
+    <mat-card-content>
+        <h2>{{ task.id }}</h2>
+        <p> <b>Total Amount</b> 
+            {{ task.totalAmount | currency: '₹' }}
+        </p> 
+        <p> <b>Order ID:</b>
+            {{ task.id }}
+        </p>
+        <p> <b>User Name: </b>
+            {{ task.userName }}
+        </p>
+        <b> User's Orders List:  </b>
+        <table mat-table [dataSource]="task.items" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Product Name </th>
+                <td mat-cell *matCellDef="let product"> {{ product.name }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef> Price </th>
+                <td mat-cell *matCellDef="let product"> {{ product.price | currency: '₹'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="count">
+                <th mat-header-cell *matHeaderCellDef> Count </th>
+                <td mat-cell *matCellDef="let product"> {{ product.count }} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['name', 'price', 'count']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['name', 'price', 'count'];"></tr>
+        </table>
+        <div class="buttons-container">
+            <button mat-raised-button color="primary" (click)="onAccept()">Accept</button>
+            <button mat-raised-button color="warn" (click)="onDecline()">Decline</button>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,45 @@
+<div class="content-wrapper">
+  <br><br>
+  <div class="container-wrapper">
+    <div class="container">
+      <h1>CATEGORIES</h1>
+
+      <button class="add-category" (click)="newCategory()" mat-button>
+        <mat-icon>add</mat-icon> Add New Category
+      </button>
+
+      <mat-table class="category-table" [dataSource]="category | async">
+
+        <ng-container matColumnDef="sr-no">
+          <th mat-header-cell *matHeaderCellDef>Sr-No.</th>
+          <td mat-cell *matCellDef="let task;let i = index">{{ i + 1 }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="url">
+          <th mat-header-cell *matHeaderCellDef>URL</th>
+          <td mat-cell *matCellDef="let task" class="url-column">
+            <a (click)="navigateToExternalUrl(task.url)" target="_blank">{{ task.url }}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let task">{{ task.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let task">
+            <button mat-icon-button (click)="editCategory('category', task)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['sr-no', 'url', 'name', 'actions']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['sr-no', 'url', 'name', 'actions'];"></tr>
+      </mat-table>
+      <mat-paginator class="m" [pageSizeOptions]="[5,10,25,100]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>

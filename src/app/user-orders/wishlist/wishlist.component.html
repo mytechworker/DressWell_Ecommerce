@@ -1,0 +1,28 @@
+<app-header></app-header>
+
+<h1>YOUR WISHLIST</h1>
+<div class="content-wrapper">
+    <div class="container-wrapper">
+        <div class="container">
+            <div class="list" *ngIf="wishlistItems.length > 0; else emptyList">
+                <div class="item" *ngFor="let item of wishlistItems"
+                    (click)="navigateToProductDetails(item.product.id)">
+                    <h2>{{ item.product.name }}</h2>
+                    <img [src]="item.product.image" alt="Product Image" class="product-image">
+                    <p> <b>Price:</b>
+                        {{ item.product.price | currency: '₹' }}
+                    </p>
+                    <p> <b>Color:</b>
+                        {{ item.product.color }}
+                    </p>
+                    <p> <b>Category:</b>
+                        {{ item.product.category }}
+                    </p>
+                </div>
+            </div>
+            <ng-template #emptyList>
+                <p>Your wishlist is empty.</p>
+            </ng-template>
+        </div>
+    </div>
+</div>

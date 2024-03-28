@@ -1,0 +1,28 @@
+<mat-drawer-container [class.drawer-opened]="drawer.opened" class="example-container">
+  <mat-drawer #drawer class="drawer" mode="side" opened="true">
+
+    <mat-toolbar class="header">
+      <div>Dashboard</div>
+      <mat-icon class="close" (click)="drawer.close()">close</mat-icon>
+    </mat-toolbar>
+
+    <div class="contents">
+      <div *ngFor="let item of sidebarList;let i=index"
+        [ngClass]="{'sidebar-item-active': item.active, 'sidebar-item': item.active}" (click)="this.changeRoute(i)"
+        [routerLink]="item.link">
+        {{item.label}}</div>
+    </div>
+    <button mat-raised-button color="primary" routerLink="/home">Back to Website</button>
+  </mat-drawer>
+
+  <mat-toolbar class="main header">
+    <mat-icon *ngIf="!drawer.opened" (click)="drawer.toggle()">
+      menu
+    </mat-icon>
+    <div>Admin Panel</div>
+  </mat-toolbar>
+
+  <div class="main contents" [class.drawer-opened]="drawer.opened">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>

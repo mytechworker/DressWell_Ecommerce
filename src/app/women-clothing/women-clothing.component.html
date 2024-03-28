@@ -1,0 +1,25 @@
+<app-header></app-header>
+<div class="content-wrapper">
+    <div class="container-wrapper">
+        <div class="container">
+            <h1>Women's Clothing</h1>
+            <div class="list">
+                <p class="empty-label" *ngIf="(product$ | async)?.length === 0">No women's clothing available</p>
+                <div class="item" *ngFor="let task of product$ | async">
+                    <ng-container *ngIf="task.category === 'Women\'s Clothing'">
+                        <img (click)="navigateToProductDetails(task.id)" [src]="task.image" alt="Product Image" class="product-image">
+                        <br><br>
+                        <a class="name" (click)="navigateToProductDetails(task.id)">{{ task.name }}</a>
+                        <br><br>
+                        <p><b>Price:</b> {{ task.price | currency:'₹' }}</p>
+                        <p><b>Color:</b> {{ task.color }}</p>
+                        <p><b>Category:</b> {{ task.category }}</p>
+                        <div class="buttons-container">
+                            <button mat-raised-button class="primary" (click)="addToCart(task)">Add to Cart</button>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="example-container">
+    <h1>Add a New SubCategory</h1>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select [(value)]="selectedCategoryId">
+            <mat-option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="data.task.name" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Image</mat-label>
+        <input matInput [(ngModel)]="data.task.url" />
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="{ task: data.task  }">OK</button>
+        <button mat-button (click)="cancel()">Cancel</button>
+        <button mat-fab color="primary" aria-label="Delete" [mat-dialog-close]="{ delete: true }">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>

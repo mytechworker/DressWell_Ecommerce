@@ -1,0 +1,26 @@
+<div class="content-wrapper">
+    <div class="container-wrapper">
+        <div class="container">
+            <h3>{{productMessage}}</h3>
+            <div class="list">
+                <p class="empty-label" *ngIf="(product | async)?.length === 0">Empty list</p>
+                <div class="item" *ngIf="task">
+                    <img (click)="navigateToProductDetails(task.id)" [src]="task.image" alt="Product Image"
+                        class="product-image">
+                    <br><br>
+                    <a class="name" (click)="navigateToProductDetails(task.id)">{{ task.name }}</a>
+                    <br>
+                    <p> <b>Price:</b>
+                        {{ task.price | currency: '₹' }}
+                    </p>
+                    <p> <b>Color:</b>
+                        {{ task.color }}
+                    </p>
+                    <div class="buttons-container">
+                        <button mat-raised-button class="primary" (click)="addToCart()">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

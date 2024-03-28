@@ -1,0 +1,12 @@
+<app-header></app-header>
+<div class="content-wrapper">
+    <div class="container-wrapper">
+        <div class="container">
+            <h1>PRODUCTS</h1>
+            <div cdkDropList id="todo" #todoList="cdkDropList" class="list">
+                <p class="empty-label" *ngIf="(product | async)?.length === 0">Empty list</p>
+                <app-product-home *ngFor="let task of product | async" cdkDrag [task]="task"></app-product-home>
+            </div>
+        </div>
+    </div>
+</div>

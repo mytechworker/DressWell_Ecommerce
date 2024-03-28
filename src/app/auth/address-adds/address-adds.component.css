@@ -1,0 +1,20 @@
+.container h1 {
+  text-align: center;
+  text-decoration-line: underline;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.container {
+  border: 5px solid rgb(145, 143, 143);
+  ;
+  padding: 10px;
+  margin-top: 20px;
+  max-width: 830px;
+}
+
+.add-address {
+  background-color: rgb(0, 204, 255);
+  padding-top: 10px;
+  margin-top: 10px;
+  ;
+}

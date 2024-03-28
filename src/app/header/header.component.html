@@ -1,0 +1,64 @@
+<mat-toolbar color="primary">
+    <span class="logo"><b>E-COMMERCE</b></span>
+    <mat-form-field class="search" appearance="fill">
+        <mat-icon matPrefix>search</mat-icon>
+        <input type="tel" matInput placeholder="Search Something" [(ngModel)]="searchInput"
+            [formControl]="searchControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectProduct($event.option.value)">
+            <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+                {{ product.name }}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <nav mat-tab-nav-bar class="tabs" [tabPanel]="tabPanel">
+        <!-- <a mat-tab-link routerLink="/auth" routerLinkActive="active" *ngIf="!isAuthenticated"><b>Authentication</b></a> -->
+        <a mat-tab-link routerLink="/home" routerLinkActive="active"><b>Home</b></a>
+        <!-- <a mat-tab-link routerLink="/product" routerLinkActive="active"><b>Products</b></a> -->
+        <a mat-tab-link routerLink="/admin" routerLinkActive="active" *ngIf="isAuthenticated"><b>Admin</b></a>
+        <a mat-tab-link routerLink="/cart" routerLinkActive="active">
+            <div class="cart">
+                <span class="count">{{totalItems}}</span>
+                <i class="material-icons">shopping_cart</i>
+            </div>
+        </a>
+        <a mat-tab-link routerLink="/notification" routerLinkActive="active" *ngIf="isAuthenticated">
+            <div class="cart">
+                <span class="count">{{totalNotifications}}</span>
+                <i class="material-icons">mail_outline</i>
+            </div>
+        </a>
+        <a [matMenuTriggerFor]="profileMenu" *ngIf="isAuthenticated">
+            <mat-icon class="person">account_circle</mat-icon>
+        </a>
+
+        <mat-menu #profileMenu="matMenu">
+            <button mat-menu-item routerLink="/profile" (click)="closeMenu()">
+                <mat-icon>visibility</mat-icon>
+                <span>View Profile</span>
+            </button>
+            <button mat-menu-item routerLink="/edit-profile" (click)="closeMenu()">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Profile</span>
+            </button>
+            <button mat-menu-item routerLink="/auth/forgot-password" (click)="closeMenu()">
+                <mat-icon>visibility</mat-icon>
+                <span>Change Password</span>
+            </button>
+            <button mat-menu-item routerLink="/user-orders">
+                <mat-icon>shopping_basket</mat-icon>
+                <span>Orders</span>
+            </button>
+            <button mat-menu-item routerLink="/wishlist" (click)="closeMenu()">
+                <mat-icon>favorite</mat-icon>
+                <span>Wishlist</span>
+            </button>
+            <button mat-menu-item class="example-spacer" (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                Log Out</button>
+        </mat-menu>
+        <a mat-tab-link routerLink="/auth" routerLinkActive="active" *ngIf="!isAuthenticated"><b>Sign In</b></a>
+    </nav>
+</mat-toolbar>
+
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>

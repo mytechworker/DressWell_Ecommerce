@@ -1,0 +1,70 @@
+<form [formGroup]="loginForm" novalidate>
+  <div *ngIf="!isSignedIn" class="example-container">
+    <h1>Sign Up</h1>
+    <mat-form-field>
+      <input matInput formControlName="name" type="text" #name placeholder="Name">
+      <mat-error *ngIf="loginForm.get('name').hasError('required')">
+        Name is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="email" type="text" #emailSignup placeholder="Email">
+      <mat-error *ngIf="loginForm.get('email').hasError('required')">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('email').hasError('email')">
+        Please provide a valid email address
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" formControlName="password" #passwordSignup placeholder="Password">
+      <mat-error *ngIf="loginForm.get('password').hasError('required')">
+        Password is required
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('password').hasError('password')">
+        Please provide a valid password
+      </mat-error>
+    </mat-form-field>
+    <br>
+    <br>
+    <button mat-raised-button (click)="onSignup(emailSignup.value, passwordSignup.value, name.value)">Sign Up</button>
+    <div class="center-container">
+      <button class="new-user" mat-raised-button (click)="toggleForm()">Already have an account? Sign In</button>
+    </div>
+  </div>
+
+  <br><br>
+
+  <div *ngIf="isSignedIn" class="example-container">
+    <h1>Sign In</h1>
+    <mat-form-field>
+      <input matInput formControlName="email" type="text" #email placeholder="Email">
+      <mat-error *ngIf="loginForm.get('email').hasError('required')">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('email').hasError('email')">
+        Please provide a valid email address
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" formControlName="password" #password placeholder="Password">
+      <mat-error *ngIf="loginForm.get('password').hasError('required')">
+        Password is required
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('password').hasError('password')">
+        Please provide a valid password
+      </mat-error>
+    </mat-form-field>
+    <br>
+    <br>
+    <button mat-raised-button (click)="onSignin(email.value, password.value)">Sign In</button>
+    <div class="center-container">
+      <button class="new-user" mat-raised-button (click)="onNewUser()">
+        Create a new account?
+      </button>
+    </div>
+    <div class="forgot-password">
+      <span routerLink="forgot-password">Forgot Password?</span>
+    </div>
+  </div>
+</form>

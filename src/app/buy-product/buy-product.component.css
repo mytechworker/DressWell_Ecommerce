@@ -1,0 +1,73 @@
+.container-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.container {
+  width: 48%;
+  margin-top: 20px;
+  ;
+}
+
+mat-card {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+app-address-home {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+a {
+  color: #1565c0;
+  text-decoration: underline;
+  cursor: pointer;
+  display: block;
+  margin-top: 10px;
+}
+
+button {
+  background-color: #204cda;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 10px;
+  /* margin-top: 15px; */
+  margin: 20px 30px 10px 30px;
+}
+
+button:hover {
+  background-color: #004080;
+}
+
+app-orders {
+  width: 48%;
+  box-sizing: border-box;
+}
+
+img {
+  width: 90px;
+  height: 30px;
+  ;
+}
+
+.custom-frame {
+  margin-bottom: 10px;
+}
+
+mat-toolbar {
+  padding: 10px;
+  height: 50px;
+  margin-top: 10px;
+  background-color: rgb(172, 212, 247);
+}
+
+.tabs {
+  justify-content: center;
+  margin-left: 40%;
+  margin-top: 15px;
+}

@@ -1,0 +1,35 @@
+mat-form-field {
+  width: 800px;
+  padding-left: 10px;
+  padding-top: 20px;
+}
+
+h1 {
+  font-family: Lato;
+  color: rgb(3, 3, 3);
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  border: 5px black solid;
+  max-width: 1000px;
+  text-align: center;
+  overflow: auto;
+  max-height: 680px;
+}
+
+button {
+  background-color: rgb(131, 139, 243);
+  height: 30px;
+  width: 30%;
+  margin: 0 auto;
+  color: rgb(235, 19, 181);
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+}

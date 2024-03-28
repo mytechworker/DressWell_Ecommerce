@@ -1,0 +1,79 @@
+<div class="content-wrapper">
+    <button class="add-product" (click)="newProduct()" mat-button>
+        <mat-icon>add</mat-icon> Add Product
+    </button>
+    <div class="container-wrapper">
+        <div class="container">
+            <h1>PRODUCTS</h1>
+            <mat-form-field class="search" appearance="fill">
+                <span matPrefix>
+                    <mat-icon matPrefix>search</mat-icon>
+                </span>
+                <mat-label>Search Something</mat-label>
+                <input type="tel" matInput placeholder="" search (keyup)="applyFilter($event)" #input />
+            </mat-form-field>
+
+            <mat-table mat-table matSort class="mat-elevation-z8" [dataSource]="dataSource">
+                <ng-container matColumnDef="sr-no">
+                    <mat-header-cell *matHeaderCellDef>Sr No.</mat-header-cell>
+                    <mat-cell *matCellDef="let task; let i = index">{{ i + 1 }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="image">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Image</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <img [src]="row.image" alt="Product Image" />
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{ row.price | currency:'₹' }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="color">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{ row.color }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="category">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{ row.category }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+                    <mat-cell class="description" [class.expanded]="row.showFullDescription" *matCellDef="let row">
+                        {{ row.description | slice:0:10 }}
+                        <button mat-icon-button (click)="toggleDescription(row)">...</button>
+                        <span *ngIf="row.showFullDescription">{{ row.description }}</span>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-icon-button (click)="editProduct('product',row)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row
+                    *matHeaderRowDef="['sr-no', 'image', 'name', 'price', 'color', 'category', 'description', 'actions']"></mat-header-row>
+                <mat-row
+                    *matRowDef="let row; columns: ['sr-no', 'image', 'name', 'price', 'color', 'category', 'description', 'actions'];"></mat-row>
+                <tr *matNoDataRow>
+                    <td class="mat-cell" colspan="4">The filter does not match any item in the data for this text:
+                        "<b>{{input.value}}</b>"</td>
+                </tr>
+            </mat-table>
+            <mat-paginator class="m" [pageSizeOptions]="[5,10,25,100]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>
