@@ -1,9 +1,9 @@
 <app-header></app-header>
 <div class="container">
   <div class="product-details">
-    <h2>{{ product.name }}</h2>
+    <h2>{{ product?.name }}</h2>
     <div class="image-container">
-      <lib-ngx-image-zoom class="product-image" [thumbImage]="product.image" [magnification]="3"
+      <lib-ngx-image-zoom class="product-image" [thumbImage]="product?.image" [magnification]="3"
         [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="300" [lensHeight]="200"></lib-ngx-image-zoom>
     </div>
     <div class="wishlist-button">
@@ -14,10 +14,10 @@
       </button>
     </div>
     <div class="details">
-      <p><b>Price:</b> {{ product.price | currency: '₹' }}</p>
-      <p><b>Color:</b> {{ product.color }}</p>
-      <p><b>Category:</b> {{ product.category }}</p>
-      <p class="description"><b>Description:</b> {{ product.description }}</p>
+      <p><b>Price:</b> {{ product?.price | currency: '₹' }}</p>
+      <p><b>Color:</b> {{ product?.color }}</p>
+      <p><b>Category:</b> {{ product?.category }}</p>
+      <p class="description"><b>Description:</b> {{ product?.description }}</p>
       <div class="buttons-container">
         <button mat-raised-button class="primary" (click)="buyProduct()">Buy Now</button>
       </div>

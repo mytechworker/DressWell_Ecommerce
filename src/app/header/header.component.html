@@ -2,8 +2,8 @@
     <span class="logo"><b>E-COMMERCE</b></span>
     <mat-form-field class="search" appearance="fill">
         <mat-icon matPrefix>search</mat-icon>
-        <input type="tel" matInput placeholder="Search Something" [(ngModel)]="searchInput"
-            [formControl]="searchControl" [matAutocomplete]="auto">
+        <input type="tel" matInput placeholder="Search Something" [formControl]="searchControl"
+            [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectProduct($event.option.value)">
             <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
                 {{ product.name }}
@@ -12,9 +12,7 @@
     </mat-form-field>
 
     <nav mat-tab-nav-bar class="tabs" [tabPanel]="tabPanel">
-        <!-- <a mat-tab-link routerLink="/auth" routerLinkActive="active" *ngIf="!isAuthenticated"><b>Authentication</b></a> -->
         <a mat-tab-link routerLink="/home" routerLinkActive="active"><b>Home</b></a>
-        <!-- <a mat-tab-link routerLink="/product" routerLinkActive="active"><b>Products</b></a> -->
         <a mat-tab-link routerLink="/admin" routerLinkActive="active" *ngIf="isAuthenticated"><b>Admin</b></a>
         <a mat-tab-link routerLink="/cart" routerLinkActive="active">
             <div class="cart">

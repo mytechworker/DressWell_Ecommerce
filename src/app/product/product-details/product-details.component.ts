@@ -44,10 +44,9 @@ export class ProductDetailsComponent {
     this.isAddedToWishlist = storedWishlistStatus
       ? JSON.parse(storedWishlistStatus)
       : false;
-  }
+}
   ngOnInit() {
     this.isAuthenticated = this.authService.isSignedIn;
-    console.log('this.isAuthenticated', this.isAuthenticated);
     this.route.params.subscribe((params) => {
       this.productId = params['id'];
       this.getProductDetails();
@@ -62,11 +61,13 @@ export class ProductDetailsComponent {
         });
       }
     });
-    this.wishlistService
-      .isProductInWishlist(this.currentUser.userId, this.productId)
-      .then((isInWishlist) => {
-        this.isAddedToWishlist = isInWishlist;
-      });
+    if (this.currentUser) {
+      this.wishlistService
+        .isProductInWishlist(this.currentUser.userId, this.productId)
+        .then((isInWishlist) => {
+          this.isAddedToWishlist = isInWishlist;
+        });
+    }
   }
 
   loadSelectedRating(): void {
