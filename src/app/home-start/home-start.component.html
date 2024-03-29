@@ -1,11 +1,13 @@
 <app-header></app-header>
-<nav mat-tab-nav-bar class="tabs" [tabPanel]="tabPanel">
-    <a mat-tab-link routerLink="/mens" routerLinkActive="active"><b>Men's Clothing</b></a>
-    <a mat-tab-link routerLink="/womens" routerLinkActive="active"><b>WoMen's Clothing</b></a>
-    <a mat-tab-link routerLink="/kids" routerLinkActive="active"><b>Kids Clothing</b></a>
-</nav>
-<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-<div class="list">
-    <p class="empty-label" *ngIf="(product | async)?.length === 0">Empty list</p>
-    <app-product-home *ngFor="let task of product | async" [task]="task"></app-product-home>
+<div class="home-start">
+    <nav mat-tab-nav-bar class="tabs" [tabPanel]="tabPanel">
+        <a mat-tab-link routerLink="/mens" routerLinkActive="active"><b>Men's Clothing</b></a>
+        <a mat-tab-link routerLink="/womens" routerLinkActive="active"><b>WoMen's Clothing</b></a>
+        <a mat-tab-link routerLink="/kids" routerLinkActive="active"><b>Kids Clothing</b></a>
+    </nav>
+    <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+    <div class="list">
+        <p class="empty-label" *ngIf="(product | async)?.length === 0">Empty list</p>
+        <app-product-home *ngFor="let task of product | async" [task]="task"></app-product-home>
+    </div>
 </div>

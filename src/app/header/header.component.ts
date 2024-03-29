@@ -70,14 +70,17 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.isAuthenticated = this.authService.isSignedIn;
-    this.afAuth.authState.subscribe((user) => {
+        this.afAuth.authState.subscribe((user) => {
       if (user) {
+        this.isAuthenticated = true;
         this.firebaseService.getUserById(user.uid).subscribe((userData) => {
           this.currentUser = userData as UserDocument;
           this.notificationService.count$.subscribe((count) => {
             this.totalNotifications = count;
           });
         });
+      } else {
+        this.isAuthenticated = false;
       }
     });
     this.configData = this.firebaseService.getConfig();
@@ -106,7 +109,7 @@ export class HeaderComponent implements OnInit {
         );
       })
     );
-  }
+      }
 
   private _filterProducts(name: string): Product[] {
     const filterValue = name.toLowerCase();
