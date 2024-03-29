@@ -3,7 +3,7 @@
         <div class="container">
             <app-address-home (edit)="editAddress('address', $event)" cdkDrag></app-address-home>
         </div>
-        <button *ngIf="(address | async)?.length === 0" class="add-address" (click)="newAddress()" mat-button>
+        <button *ngIf="!hasAddresses()" class="add-address" (click)="newAddress()" mat-button>
             <mat-icon>add</mat-icon> Add Address
         </button>
     </div>

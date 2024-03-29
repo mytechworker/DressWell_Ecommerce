@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
 import { AddressComponent, AddressResult } from '../address/address.component';
 import { transferArrayItem } from '@angular/cdk/drag-drop';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import { Address } from '../../product';
+import { Address, UserDocument } from '../../product';
 import { FirebaseService } from '../../services/firebase.service';
 
 const getObservable = (collection: AngularFirestoreCollection<Address>) => {
   const subject = new BehaviorSubject<Address[]>([]);
-  collection.valueChanges({ idField: 'id' }).subscribe((val: Address[]) => {
-    subject.next(val);
-  });
+  collection.valueChanges({ idField: 'id' }).subscribe((val: Address[]) => {subject.next(val)});
   return subject;
 };
 
@@ -21,16 +19,32 @@ const getObservable = (collection: AngularFirestoreCollection<Address>) => {
   styleUrls: ['./address-adds.component.css'],
 })
 export class AddressAddsComponent {
+  currentUserSubscription: Subscription | undefined;
+  currentUser: UserDocument | null = null;
+  addresses: Address[] = [];
+
   constructor(
     private dialog: MatDialog,
     private store: AngularFirestore,
     private firebaseService: FirebaseService
   ) {}
-  address = getObservable(this.store.collection('address')) as Observable<
-    Address[]
-  >;
+  address = getObservable(this.store.collection('address')) as Observable<Address[]>;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.currentUserSubscription = this.firebaseService.getCurrentUser()
+      .subscribe((user) => {
+        this.currentUser = user;
+        if (user) {
+          this.fetchAddresses(user.userId);
+        }
+      });
+  }
+
+  fetchAddresses(userId: string) {
+    this.firebaseService.getAddressById(userId).subscribe((addresses) => {
+      this.addresses = addresses;
+    });
+  }
 
   editAddress(list: 'address', task: Address) {
     const dialogRef = this.dialog.open(AddressComponent, {
@@ -81,28 +95,31 @@ export class AddressAddsComponent {
       },
     });
     dialogRef.afterClosed().subscribe((result: AddressResult) => {
-      if (!result) {
+      if (!result || !this.currentUser) {
         return;
       }
-      this.firebaseService.getCurrentUser().subscribe((user) => {
-        if (user) {
-          const newAddressId = this.store.createId();
-          this.store
-            .collection('address')
-            .doc(newAddressId)
-            .set({
-              ...result.task,
-              userId: user.userId,
-              id: newAddressId,
-            })
-            .then(() => {
-              console.log('Document successfully added!');
-            })
-            .catch((error) => {
-              console.error('Error adding document:', error);
-            });
-        }
-      });
+      const newAddressId = this.store.createId();
+      this.store.collection('address').doc(newAddressId).set({
+          ...result.task,
+          userId: this.currentUser.userId,
+          id: newAddressId,
+        })
+        .then(() => {
+          console.log('Document successfully added!');
+        })
+        .catch((error) => {
+          console.error('Error adding document:', error);
+        });
     });
+  }
+
+  hasAddresses(): boolean {
+    return this.addresses.length > 0;
+  }
+
+  ngOnDestroy() {
+    if (this.currentUserSubscription) {
+      this.currentUserSubscription.unsubscribe();
+    }
   }
 }

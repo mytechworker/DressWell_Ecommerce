@@ -48,9 +48,12 @@ export class AuthComponent implements OnInit {
       const userId = user.uid;
       await this.firebaseService.storeUserInfo(userId, name, email);
       this.authService.updateAuthState(true);
+      this.router.navigate(['/home']);
+    } else {
+      this.router.navigate(['/auth']);
     }
   }
-
+  
   async onSignin(email: string, password: string) {
     await this.firebaseService.signin(email, password);
     if (this.firebaseService.isLoggedIn) this.authService.updateAuthState(true);

@@ -32,7 +32,9 @@
 
     <mat-form-field>
         <mat-label>State</mat-label>
-        <input matInput [(ngModel)]="data.task.state" />
+        <mat-select [(ngModel)]="data.task.state">
+            <mat-option *ngFor="let state of indianStates" [value]="state">{{ state }}</mat-option>
+        </mat-select>
     </mat-form-field>
 
     <div mat-dialog-actions>
