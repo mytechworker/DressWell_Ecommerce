@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Subscription } from 'rxjs';
 import { Orders, Product } from '../../product';
 import { CartService } from '../../services/cart.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
 })
-export class OrdersComponent {
+export class OrdersComponent implements OnInit{
   authStateSubscription: Subscription | null = null;
   totalAmount: number = 0;
   orderId: string = '';
@@ -20,7 +21,8 @@ export class OrdersComponent {
   constructor(
     private cartService: CartService,
     private store: AngularFirestore,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -61,6 +63,9 @@ export class OrdersComponent {
           .catch((error) => {
             console.error('Error adding order: ', error);
           });
+      } else {
+        // User is not signed in, navigate to sign-in page
+        this.router.navigate(['/auth']);
       }
     });
   }

@@ -1,6 +1,7 @@
 mat-toolbar {
     padding: 10px;
     height: 80px;
+    min-width: 1000px !important;
 }
 
 .tabs a b {
