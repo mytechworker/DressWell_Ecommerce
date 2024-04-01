@@ -1,10 +1,23 @@
 <app-header></app-header>
 
-<div *ngFor="let notification of notifications" class="notification-item">
-  <div
-    [ngClass]="{'order-accepted': notification.type === 'order_accepted','order-declined': notification.type === 'order_declined'}">
-    <span [innerHTML]="notification.message"></span>
-    <br>
-    <!-- <button class="btn btn-primary btn-block" (click)="openPDF(notification)">Open PDF</button> -->
+<div class="container">
+  <div class="card">
+    <h2>Unread Notifications</h2>
+    <div *ngFor="let notification of notifications" class="notification-item">
+      <div
+        [ngClass]="{'order-accepted': notification.type === 'order_accepted','order-declined': notification.type === 'order_declined'}">
+        <span [innerHTML]="notification.message"></span>
+        <button (click)="markAsRead(notification)">Mark as Read</button>
+        <br>
+      </div>
+    </div>
   </div>
+
+  <div class="card" *ngIf="showReadNotifications">
+    <h2>Read Notifications</h2>
+    <app-read-notification></app-read-notification>
+  </div>
+
+  <button class="toggle-btn" *ngIf="!showReadNotifications" (click)="toggleReadNotifications()">Previous
+    Notifications</button>
 </div>

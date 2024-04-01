@@ -33,16 +33,66 @@
 }
 
 button {
-  background-color: #003d18;
+  background-color: #473dd4e7;
   color: white;
-  border: none;
+  border: 5px solid rgb(52, 22, 160);
   cursor: pointer;
   font-size: 15px;
   margin-top: 15px;
   margin-left: 20px;
-  width: 120px;
+  width: 180px;
+  border-radius: 20px;
 }
 
 button:hover {
+  background-color: #004080;
+}
+
+.container {
+  display: flex;
+}
+
+.notifications {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.read-notifications {
+  flex: 1;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.card {
+  margin-top: 20px;
+  width: 45%;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.notification-item {
+  margin-bottom: 10px;
+}
+
+.toggle-btn {
+  background-color: #473dd4e7;
+  color: white;
+  border: 5px solid rgb(52, 22, 160);
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 15px;
+  margin-left: 20px;
+  margin-right: 0;
+  width: 180px;
+  height: 100px;
+  border-radius: 20px;
+}
+
+.toggle-btn:hover {
   background-color: #004080;
 }

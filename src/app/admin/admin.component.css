@@ -11,11 +11,12 @@
   right: 0;
   justify-content: space-between;
   background-color: #524bc0e7;
+  color: #fff;
 }
 
 .drawer .contents {
   cursor: pointer;
-  padding-top: 80px;
+  padding-top: 100px;
   padding-left: 10px;
   z-index: 1000;
 
@@ -36,6 +37,7 @@
   width: 100%;
   border-bottom: 1px solid #ccc;
   background-color: #524bc0e7;
+  color: #fff;
 }
 
 .main.contents {
@@ -56,4 +58,12 @@ button {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.drawer .contents div {
+  margin-bottom: 10px;
+  font-weight: 700;
+  border: 2px solid rgb(246, 249, 250);
+  margin-right: 10px;
+  padding: 20px;
 }

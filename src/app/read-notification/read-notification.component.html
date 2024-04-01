@@ -1,0 +1,7 @@
+<div *ngFor="let notification of readNotifications" class="notification-item">
+    <div
+        [ngClass]="{'order-accepted': notification.type === 'order_accepted','order-declined': notification.type === 'order_declined'}">
+        <span [innerHTML]="notification.message"></span>
+        <br>
+    </div>
+</div>

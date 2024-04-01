@@ -36,5 +36,9 @@ button {
 
 .forgot-password {
   cursor: pointer;
+}
 
+mat-error{
+  color: white;
+  font-size: large;
 }

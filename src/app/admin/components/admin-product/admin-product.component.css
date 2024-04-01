@@ -1,9 +1,7 @@
 .content-wrapper {
-  max-width: 1000px;
   margin-left: 180px;
-
   .container {
-    width: 100%;
+    max-width: 1500px;
   }
 
   .search {
@@ -28,12 +26,13 @@ img {
 
 mat-header-cell {
   max-width: 800px;
-  border: 4px solid white;
+  background-image: linear-gradient(rgb(174, 165, 248), rgb(154, 234, 238)) !important;
 }
 
 mat-cell {
   max-width: 1000px;
-  border: 4px solid white;
+  margin-top: 10px;
+  background-image: linear-gradient(rgb(144, 229, 250), rgb(233, 233, 226));
 }
 
 .mdc-data-table__cell.description {
@@ -45,6 +44,13 @@ mat-cell {
 .add-product {
   margin-top: 30px;
   margin-bottom: 20px;
-  ;
-  background-color: cadetblue;
+  color: aliceblue;
+  background-color: rgb(95, 89, 185);
+}
+
+mat-paginator {
+  background-image: linear-gradient( rgb(154, 234, 238),rgb(174, 165, 248));
+  max-width: 1500px;
+  margin-top: 20px;
+  font-weight: 700;
 }

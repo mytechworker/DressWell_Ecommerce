@@ -14,6 +14,7 @@ import { UserDataService } from '../../services/user-data.service';
 export class EditProfileComponent {
   currentUser: UserDocument | null = null;
   userForm: FormGroup;
+  saveMessage: string;
 
   constructor(
     private firebaseService: FirebaseService,
@@ -90,5 +91,7 @@ export class EditProfileComponent {
     } else {
       console.log('Form is invalid. Please check the fields.');
     }
+    this.saveMessage="Profile Saved Successfully!";
+    setTimeout(() => (this.saveMessage = undefined), 3000);
   }
 }

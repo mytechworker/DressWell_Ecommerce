@@ -1,26 +1,49 @@
   .category-table {
-    width: 800px;
     margin-top: 20px;
+    background-image: linear-gradient(rgb(144, 229, 250), rgb(233, 233, 226));
   }
 
   .mat-cell,
   .mat-header-cell {
     padding-top: 18px;
     text-align: left;
+    font-size: larger;
+    font-weight: 900;
   }
 
   .url-column {
-    max-width: 850px;
+    max-width: 1000px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 700;
+    color: blue;
   }
 
   .add-category {
     margin-top: 10px;
-    background-color: rgb(6, 169, 233);
+    color: aliceblue;
+    background-color: rgb(95, 89, 185);
   }
 
   mat-paginator {
-    background-image: linear-gradient(rgb(237, 236, 245), rgb(228, 249, 250));
+    background-image: linear-gradient( rgb(154, 234, 238),rgb(174, 165, 248));
+    max-width: 1300px;
+    margin-top: 20px;
+    font-weight: 700;
+  }
+
+  .content-wrapper {
+    margin-left: 100px;
+    max-width: 1300px;
+  }
+
+  th{
+    font-size: larger;
+    padding-top: 10px;
+  }
+
+  td{
+    font-size: larger;
+    font-weight: 500;
   }

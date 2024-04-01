@@ -25,9 +25,9 @@ export class CartService {
       if (user) {
         this.firestore.collection('users').doc(user.uid).valueChanges()
           .subscribe((userData: any) => {
-            const cartItems: Product[] =
-              userData && userData.cartItems ? userData.cartItems : [];
+            const cartItems: Product[] = userData && userData.cartItems ? userData.cartItems : [];
             this.cartItemsSubject.next(cartItems);
+            this.updateLocalStorage(cartItems);
           });
       } else {
         const storedItems = localStorage.getItem(this.storageKey);
@@ -35,7 +35,7 @@ export class CartService {
         this.cartItemsSubject.next(cartItems);
       }
     });
-  }
+  }  
 
   getAllCartItems() {
     return this.cartProducts;
@@ -117,5 +117,6 @@ export class CartService {
   clearCart() {
     this.cartItemsSubject.next([]);
     localStorage.removeItem('cartItems');
+    this.updateFirestore([]);
   }
 }

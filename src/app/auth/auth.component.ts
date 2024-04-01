@@ -3,6 +3,7 @@ import { FirebaseService } from '../services/firebase.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/authenticate.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'auth-login',
@@ -16,7 +17,8 @@ export class AuthComponent implements OnInit {
   constructor(
     private firebaseService: FirebaseService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar
   ) {
     this.loginForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -42,30 +44,44 @@ export class AuthComponent implements OnInit {
   }
 
   async onSignup(email: string, password: string, name: string) {
-    await this.firebaseService.signup(email, password);
-    if (this.firebaseService.isLoggedIn) {
-      const user = JSON.parse(localStorage.getItem('user'));
-      const userId = user.uid;
-      await this.firebaseService.storeUserInfo(userId, name, email);
-      this.authService.updateAuthState(true);
-      this.router.navigate(['/home']);
-    } else {
-      this.router.navigate(['/auth']);
+    try {
+      await this.firebaseService.signup(email, password);
+      if (this.firebaseService.isLoggedIn) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const userId = user.uid;
+        await this.firebaseService.storeUserInfo(userId, name, email);
+        this.authService.updateAuthState(true);
+        this.router.navigate(['/home']);
+      } else {
+        this.router.navigate(['/auth']);
+      }
+    } catch (error) {
+      this.snackBar.open('Enter valid email.', 'Close', {
+        duration: 3000,
+      });
     }
   }
-  
+
   async onSignin(email: string, password: string) {
-    await this.firebaseService.signin(email, password);
-    if (this.firebaseService.isLoggedIn) this.authService.updateAuthState(true);
-    this.loginForm.reset();
-    this.router.navigate(['/home']);
+    try {
+      await this.firebaseService.signin(email, password);
+      if (this.firebaseService.isLoggedIn) {
+        this.authService.updateAuthState(true);
+        this.loginForm.reset();
+        this.router.navigate(['/home']);
+      }
+    } catch (error) {
+      this.snackBar.open('Invalid email or password.', 'Close', {
+        duration: 3000,
+      });
+    }
   }
 
   handleLogout() {
     this.authService.updateAuthState(false);
     this.router.navigate(['/auth-login']);
   }
-  
+
   toggleForm() {
     this.isSignedIn = !this.isSignedIn;
     this.loginForm.reset();

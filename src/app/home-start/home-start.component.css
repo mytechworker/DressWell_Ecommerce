@@ -7,7 +7,7 @@
   font-size: larger;
 }
 
-nav A {
+nav a {
   border: 2px solid rgb(0, 50, 94);
   margin: 10px 30px 0px 30px;
   border-radius: 20px;

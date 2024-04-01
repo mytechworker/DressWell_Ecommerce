@@ -50,6 +50,7 @@ import { WomenClothingComponent } from './women-clothing/women-clothing.componen
 import { KidsClothingComponent } from './kids-clothing/kids-clothing.component';
 import { PaymentComponent } from './payment/payment.component';
 import { NgxStripeModule } from 'ngx-stripe';
+import { ReadNotificationComponent } from './read-notification/read-notification.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,6 +91,7 @@ import { NgxStripeModule } from 'ngx-stripe';
     WomenClothingComponent,
     KidsClothingComponent,
     PaymentComponent,
+    ReadNotificationComponent
   ],
   imports: [
     BrowserModule,

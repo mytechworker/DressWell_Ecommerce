@@ -52,6 +52,7 @@ export class OrdersComponent implements OnInit{
             const orderId = docRef.id;
             this.orderId = orderId;
             this.cartService.clearCart();
+            localStorage.removeItem('cartItems');
             if (!this.alertShown) {
               alert('Your order is in Progress!');
               this.alertShown = true;
@@ -64,9 +65,8 @@ export class OrdersComponent implements OnInit{
             console.error('Error adding order: ', error);
           });
       } else {
-        // User is not signed in, navigate to sign-in page
         this.router.navigate(['/auth']);
       }
     });
-  }
+  }  
 }

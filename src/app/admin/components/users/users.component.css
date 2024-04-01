@@ -1,8 +1,3 @@
-mat-table {
-  width: 100%;
-  margin-top: 30px;
-}
-
 mat-header-cell {
   font-weight: bold;
 }
@@ -12,7 +7,7 @@ mat-row {
   justify-content: space-between;
   align-items: center;
   height: 48px;
-  background-image: linear-gradient(rgb(237, 236, 245), rgb(228, 249, 250));
+  background-image: linear-gradient(rgb(144, 229, 250), rgb(233, 233, 226));
   font-size: medium;
   font-style: italic;
 }
@@ -22,7 +17,7 @@ mat-header-row {
   justify-content: space-between;
   align-items: center;
   height: 48px;
-  background-image: linear-gradient(rgb(144, 229, 250), rgb(233, 233, 226));
+  background-image: linear-gradient(rgb(174, 165, 248), rgb(154, 234, 238));
   font-size: larger;
 }
 
@@ -51,16 +46,23 @@ mat-slide-toggle {
   color: red;
 }
 
-.search {
-  min-width: 200px;
-  width: 100%;
+mat-paginator {
+  background-image: linear-gradient( rgb(154, 234, 238),rgb(174, 165, 248));
+  font-weight: 700;
+}
 
-  @media (min-width: 600px) {
-
-    min-width: 300px;
+.user-table{
+  margin-left: 100px;
+  max-width: 1500px;
+  .search{
+    min-width: 200px;
+    width: 100%;
+    @media (min-width: 600px) {
+      min-width: 300px;
+    }
   }
+}
 
-  @media (min-width: 800px) {
-    min-width: 400px;
-  }
+.search-bar{
+  background-image: linear-gradient(rgb(174, 165, 248), rgb(154, 234, 238));
 }
