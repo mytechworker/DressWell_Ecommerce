@@ -1,11 +1,19 @@
-.notification-container {
-  position: fixed;
-  top: 16px;
-  right: 160px;
-  z-index: 1000;
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.card {
+  margin-top: 20px;
+  width: 45%;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .notification-item {
+  margin-bottom: 10px;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -46,37 +54,6 @@ button {
 
 button:hover {
   background-color: #004080;
-}
-
-.container {
-  display: flex;
-}
-
-.notifications {
-  flex: 1;
-  margin-right: 20px;
-}
-
-.read-notifications {
-  flex: 1;
-}
-
-.container {
-  display: flex;
-  justify-content: space-around;
-}
-
-.card {
-  margin-top: 20px;
-  width: 45%;
-  background-color: #f0f0f0;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.notification-item {
-  margin-bottom: 10px;
 }
 
 .toggle-btn {

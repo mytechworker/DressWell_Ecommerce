@@ -2,12 +2,19 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  font-family: 'Times New Roman', Times, serif;
+  margin-left: 50px;
 }
 
 .container {
   width: 48%;
   margin-top: 20px;
-  ;
+  border: 3px solid rgb(145, 143, 143);
+
+  button {
+    height: 50px;
+    font-size: larger;
+  }
 }
 
 mat-card {
@@ -30,14 +37,13 @@ a {
 }
 
 button {
-  background-color: #204cda;
+  background-color: #435eda;
   color: white;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
   font-size: 10px;
-  /* margin-top: 15px; */
-  margin: 20px 30px 10px 30px;
+  margin-top: 50px;
 }
 
 button:hover {
@@ -52,7 +58,6 @@ app-orders {
 img {
   width: 90px;
   height: 30px;
-  ;
 }
 
 .custom-frame {
@@ -64,10 +69,31 @@ mat-toolbar {
   height: 50px;
   margin-top: 10px;
   background-color: rgb(172, 212, 247);
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .tabs {
   justify-content: center;
   margin-left: 40%;
   margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: xx-large;
+}
+
+.your-address {
+  font-size: 30px;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.pdf-buttons{
+  margin-left: 50px;
+  button{
+    height: 70px;
+    margin-top: 50px;
+    margin-right: 30px;
+    width: 200px;
+    font-size: 20px;
+  }
 }

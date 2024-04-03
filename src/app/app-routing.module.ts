@@ -30,7 +30,7 @@ import { ProductOrdersComponent } from './admin/components/product-orders/produc
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: HomeStartComponent,
   },
   {
     path: 'auth',

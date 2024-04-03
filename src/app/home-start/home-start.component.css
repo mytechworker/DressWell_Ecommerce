@@ -4,7 +4,9 @@
 
 .tabs a b {
   color: rgb(0, 53, 100) !important;
-  font-size: larger;
+  font-size: 24px;
+  font-weight: 1000;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 nav a {
@@ -17,10 +19,11 @@ nav a {
 }
 
 .list {
-  margin: 50px;
+  margin-top: 50px;
+  margin-left: 120px;
   display: flex;
   flex-wrap: wrap;
-  gap: 26px;
+  gap: 56px;
 }
 
 .item {
@@ -91,7 +94,6 @@ nav a {
   background-color: #007bff;
 }
 
-/* Adjust the position of the navigation links */
 .mat-slider-horizontal {
   margin-bottom: 20px;
 }

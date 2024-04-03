@@ -2,11 +2,14 @@ mat-toolbar {
     padding: 10px;
     height: 80px;
     min-width: 1000px !important;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .tabs a b {
     color: aliceblue !important;
     font-size: larger;
+    font-weight: 1000;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .logo {
@@ -25,9 +28,11 @@ mat-toolbar {
 
 .logo {
     margin-right: 16px;
+    font-size: xx-large;
 }
 
 .search {
+    font-family: 'Times New Roman', Times, serif;
     margin-top: 20px;
     width: 700px;
 }

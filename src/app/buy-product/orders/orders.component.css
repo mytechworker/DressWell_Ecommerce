@@ -1,19 +1,29 @@
 .order-summary-card {
-  width: 300px;
-  margin: 20px;
-  padding: 10px;
+  margin-top: 20px;
+  margin-left: 200px;
+  width: 450px;
+  text-align: center;
+  font-size: 22px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 3px solid rgb(145, 143, 143);
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .order-summary-card h1 {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.order-summary-card p {
-  margin: 8px 0;
+  font-size: 28px;
+  padding: 10px;
+  text-align: center;
+  text-decoration-line: underline;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .order-total {
   color: rgb(238, 112, 10);
+}
+
+.buttons-container button{
+  width: 400px;
+  height: 50px;
+  margin: 20px;
+  font-family: 'Times New Roman', Times, serif;
 }

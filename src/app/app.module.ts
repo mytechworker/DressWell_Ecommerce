@@ -112,7 +112,7 @@ import { ReadNotificationComponent } from './read-notification/read-notification
     NgxImageZoomModule,
     SimpleNotificationsModule.forRoot(),
     NgxStripeModule.forRoot(
-      'pk_test_51OQMS8SBmrKIRoJWhVgg6myQKYC6OSEFOCcVQLT3TMBs7LWV30GvB9MZkKYAKBOzdnLQQTta3ZlQYTIcrJmfqNbs00NlzjPYwh'
+      'pk_test_51OUQ2YSBsRjMaYOe1phMU8RuXK3UsacqVQ9wdcdl8w53r3DXxHMkMZoFIqKH9lqiitvrqttRjfifDiBnXrc4C2eh00jlSA8Rl3'
     ),
   ],
   providers: [provideAnimationsAsync(), CartService, AuthService],

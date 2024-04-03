@@ -66,7 +66,7 @@ export class ProductOrdersComponent {
     const confirmation = window.confirm(
       `Are you sure you want to ${status.toLowerCase()} this order?`
     );
-
+  
     if (confirmation) {
       const notification: Notification = {
         type: status === 'Accepted' ? 'order_accepted' : 'order_declined',
@@ -75,13 +75,16 @@ export class ProductOrdersComponent {
         }</b> has been <b>${status.toLowerCase()}<b>!`,
         read: false,
         details: { order },
+        userId: order.userId
       };
-
-      this.notificationService.sendNotification(notification);
+  
+      this.notificationService.sendNotification(notification, order.userId);
       this.orderService.moveOrder(order, status);
       this.orders = this.orders.filter((o) => o !== order);
+      const userId = order.userId;
+      this.notificationService.sendNotificationToUser(userId, notification);
     }
-  }
+  }  
 
   sendNotificationToUser(userId: string, message: string) {
     const userToken = 'user_fcm_token';

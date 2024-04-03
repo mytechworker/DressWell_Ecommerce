@@ -68,4 +68,5 @@ export interface Notification {
   details: any;
   read: boolean;
   count?: number;
+  userId?: string;
 }

@@ -104,11 +104,6 @@ button {
   overflow: hidden;
 }
 
-ngx-image-zoom {
-  height: 400px;
-  width: 500px;
-}
-
 h3{
   display: flex;
   align-items: center;

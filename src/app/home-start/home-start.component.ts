@@ -18,5 +18,11 @@ const getObservable = (collection: AngularFirestoreCollection<Product>) => {
 export class HomeStartComponent {
   @Input() task: Product | null = null;
   constructor(private store: AngularFirestore) {}
-  product = getObservable(this.store.collection('product')) as Observable<Product[]>;
+  productCollection: AngularFirestoreCollection<Product>;
+  product: Observable<Product[]>;
+
+  ngOnInit() {
+    this.productCollection = this.store.collection<Product>('product', ref => ref.limit(4));
+    this.product = getObservable(this.productCollection);
+  }
 }

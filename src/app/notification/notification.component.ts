@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderService } from '../services/orders.service';
 import { Address, Notification, Orders, UserDocument } from '../product';
 import { NotificationService } from '../services/notification.service';
 import { Observable, of } from 'rxjs';
@@ -26,40 +25,29 @@ export class NotificationComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private userDataService: UserDataService,
     private firebaseService: FirebaseService,
-    private ordersService: OrderService
   ) {}
 
   ngOnInit(): void {
-    this.notificationService.notifications$.subscribe((notifications) => {
-      this.notifications = notifications;
-    });
-
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.firebaseService.getUserById(user.uid).subscribe(
           (userData) => {
-            this.userDataService.setCurrentUser(userData);
-            this.fetchAddresses(userData.userId);
-            this.currentUser = userData as UserDocument;
-            this.ordersService
-              .getAcceptedOrdersByUser(user.uid)
-              .subscribe((userAcceptedOrders) => {
-                this.acceptedOrders$ = of(userAcceptedOrders);
-              });
+            this.currentUser = userData;
+            this.fetchNotifications();
           },
           (error) => {
             console.error('Error fetching user data:', error);
-            this.isDataLoaded = true;
           }
         );
       }
     });
+  }
 
-    this.userDataService.userForm$.subscribe((userForm) => {
-      if (userForm !== null) {
-        this.userForm = userForm;
-      }
-    });
+  fetchNotifications() {
+    if (this.currentUser) {
+      this.notificationService.getNotificationsByUserId(this.currentUser.userId)
+        .subscribe((notifications) => { this.notifications = notifications });
+    }
   }
 
   fetchAddresses(userId: string) {
@@ -71,7 +59,14 @@ export class NotificationComponent implements OnInit {
   }
 
   markAsRead(notification: Notification): void {
-    this.notificationService.markAsRead(notification);
+    if (this.currentUser) {
+      this.notificationService.markAsRead(
+        notification,
+        this.currentUser.userId
+      );
+    } else {
+      console.error('User is not logged in');
+    }
   }
 
   toggleReadNotifications() {

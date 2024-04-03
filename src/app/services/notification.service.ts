@@ -14,17 +14,16 @@ export class NotificationService {
   private countSubject = new BehaviorSubject<number>(0);
   public count$: Observable<number> = this.countSubject.asObservable();
   private readNotificationsSubject = new BehaviorSubject<Notification[]>([]);
-  private readNotifications$: Observable<Notification[]> = this.readNotificationsSubject.asObservable();
 
   constructor(
     private firestore: AngularFirestore,
     private notificationsService: NotificationsService
   ) {
-    this.notificationsCollection =
-      this.firestore.collection<Notification>('notifications');
+    this.notificationsCollection = this.firestore.collection<Notification>('notifications');
   }
 
-  sendNotification(notification: Notification): void {
+  sendNotification(notification: Notification, userId: string): void {
+    notification.userId = userId;
     this.notificationsCollection.add(notification);
     this.showNotification(notification.message, notification.type);
   }
@@ -48,8 +47,9 @@ export class NotificationService {
     }
   }
 
-  private updateNotificationCount(): void {
-    this.firestore.collection<Notification>('notifications').snapshotChanges()
+  private updateNotificationCount(userId: string): void {
+    this.firestore.collection<Notification>('notifications', (ref) =>ref.where('userId', '==', userId))
+      .snapshotChanges()
       .subscribe((changes) => {
         const notifications = changes.map((change) => {
           const data = change.payload.doc.data() as Notification;
@@ -60,15 +60,17 @@ export class NotificationService {
         this.countSubject.next(notifications.length);
       });
   }
-  init(): void {
-    this.updateNotificationCount();
+
+  init(userId: string): void {
+    this.updateNotificationCount(userId);
     this.updateNotifications();
   }
 
   private updateNotifications(): void {
-    this.notificationsCollection.valueChanges({ idField: 'id' }).subscribe((notifications) => {
-      this.notificationsSubject.next(notifications);
-    });
+    this.notificationsCollection.valueChanges({ idField: 'id' })
+      .subscribe((notifications) => {
+        this.notificationsSubject.next(notifications);
+      });
   }
 
   getTotalCount() {
@@ -76,24 +78,49 @@ export class NotificationService {
     return notifications.reduce((total, item) => total + item.count, 0);
   }
 
-  markAsRead(notification: Notification): void {
-    const updatedNotifications = this.notificationsSubject.value.filter(n => n.id !== notification.id);
+  markAsRead(notification: Notification, userId: string): void {
+    const updatedNotifications = this.notificationsSubject.value.filter(
+      (n) => n.id !== notification.id
+    );
     this.notificationsSubject.next(updatedNotifications);
-    this.readNotificationsSubject.next([...this.readNotificationsSubject.value, notification]);
-    this.firestore.collection('readNotifications').add(notification);
+    this.readNotificationsSubject.next([
+      ...this.readNotificationsSubject.value,
+      notification,
+    ]);
+
+    this.firestore.collection(`readNotifications/${userId}/notifications`).add(notification);
     const notificationsCollectionRef = this.firestore.collection('notifications');
-    notificationsCollectionRef.doc(notification.id).delete().then(() => {
-      console.log('Notification removed from notifications collection');
-    }).catch((error) => {
-      console.error('Error removing notification from notifications collection:', error);
-    });
+    notificationsCollectionRef.doc(notification.id).delete()
+      .then(() => {
+        console.log('Notification removed from notifications collection');
+      })
+      .catch((error) => {
+        console.error(
+          'Error removing notification from notifications collection:',
+          error
+        );
+      });
   }
 
-  handleMarkAsRead(notification: Notification): void {
-    this.markAsRead(notification);
+  getReadNotifications(userId: string): Observable<Notification[]> {
+    return this.firestore.collection<Notification>(`readNotifications/${userId}/notifications`)
+      .valueChanges({ idField: 'id' });
   }
 
-  getReadNotifications(): Observable<Notification[]> {
-    return this.firestore.collection<Notification>('readNotifications').valueChanges({ idField: 'id' });
+  sendNotificationToUser(userId: string, notification: Notification) {
+    notification.userId = userId;
+    this.firestore.collection(`userNotifications/${userId}/notifications`).add(notification);
+  }
+
+  getUserNotifications(userId: string): Observable<Notification[]> {
+    return this.firestore.collection<Notification>(`userNotifications/${userId}/notifications`)
+      .valueChanges({ idField: 'id' });
+  }
+
+  getNotificationsByUserId(userId: string): Observable<Notification[]> {
+    return this.firestore.collection<Notification>('notifications', (ref) =>
+        ref.where('userId', '==', userId)
+      )
+      .valueChanges({ idField: 'id' });
   }
 }
