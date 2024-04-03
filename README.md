@@ -8,7 +8,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 # Live Website
 
-This is the link of the live website: `(https://dress-well-ecommerce.vercel.app/)`
+This is the link of the live website: [Dresswell_Ecommerce](https://dress-well-ecommerce.vercel.app/).
 
 ## Code scaffolding
 
