@@ -9,32 +9,6 @@ import { of, switchMap } from 'rxjs';
   templateUrl: './read-notification.component.html',
   styleUrl: './read-notification.component.css'
 })
-// export class ReadNotificationComponent implements OnInit {
-//   readNotifications: Notification[] = [];
-
-//   constructor(
-//     private notificationService: NotificationService,
-//     private afAuth: AngularFireAuth
-//   ) {}
-
-//   ngOnInit(): void {
-//     this.afAuth.authState.pipe(
-//       switchMap(user => {
-//         if (user) {
-//           return this.notificationService.getReadNotifications(user.uid);
-//         } else {
-//           return [];
-//         }
-//       })
-//     ).subscribe((notifications) => {
-//       if (Array.isArray(notifications)) {
-//         this.readNotifications = notifications;
-//       } else {
-//         this.readNotifications = [];
-//       }
-//     });
-//   }
-// }
 
 export class ReadNotificationComponent implements OnInit {
   readNotifications: Notification[] = [];
