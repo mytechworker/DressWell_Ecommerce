@@ -35,6 +35,9 @@ export class PaymentComponent implements OnInit {
       this.cartService.cartItems$.subscribe((items) => {
         this.cartItems = items;
       });
+      this.paymentService.totalAmount$.subscribe(amount => {
+        this.totalAmount = amount;
+      });
     }
   }
 

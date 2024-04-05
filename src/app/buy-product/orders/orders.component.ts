@@ -18,12 +18,8 @@ export class OrdersComponent implements OnInit {
   constructor(private paymentService: PaymentService) {}
 
   ngOnInit() {
-    const storedTotalAmount = localStorage.getItem('total_amount');
-    if (storedTotalAmount) {
-      this.totalAmount = parseFloat(storedTotalAmount);
-    }
-    this.paymentService.paymentSuccess$.subscribe(() => {
-      this.totalAmount = 0;
+    this.paymentService.totalAmount$.subscribe(amount => {
+      this.totalAmount = amount;
     });
   }
 

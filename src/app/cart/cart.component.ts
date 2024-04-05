@@ -3,6 +3,8 @@ import { CartService } from '../services/cart.service';
 import { Product } from '../product';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+import { AuthService } from '../services/authenticate.service';
+import { PaymentService } from '../services/payment.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +20,9 @@ export class CartComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService,
+    private totalAmountService: PaymentService
   ) {}
 
   ngOnInit() {
@@ -48,6 +52,7 @@ export class CartComponent implements OnInit {
         this.totalItems += item.count;
       }
     });
+    this.totalAmountService.updateTotalAmount(this.totalAmount);
   }
 
   addToCart(item: Product): void {
@@ -60,7 +65,11 @@ export class CartComponent implements OnInit {
   }
 
   buyProduct() {
-    this.router.navigate(['/buy']);
+    if (this.authService.isSignedIn == true) {
+      this.router.navigate(['/buy']);
+    } else {
+      this.router.navigate(['/auth']);
+    }
   }
 
   navigateToProductDetails(productId: string) {
