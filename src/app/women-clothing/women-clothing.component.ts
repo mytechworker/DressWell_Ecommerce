@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class WomenClothingComponent {
   product$: Observable<Product[]>;
+  productMessages: { [key: string]: string } = {};
 
   constructor(
     private firestore: AngularFirestore,
@@ -26,9 +27,19 @@ export class WomenClothingComponent {
 
   addToCart(product: Product) {
     this.cartService.addToCart(product);
+    this.productAddedtoCart(product.id);
   }
 
   navigateToProductDetails(productId: string) {
     this.router.navigate(['/product-details', productId]);
+  }
+
+  productAddedtoCart(productId: string) {
+    this.productMessages[productId] = 'Product Added to Cart Successfully!';
+    setTimeout(() => (this.productMessages[productId] = undefined), 3000);
+  }
+
+  getProductMessage(productId: string): string {
+    return this.productMessages[productId] || '';
   }
 }

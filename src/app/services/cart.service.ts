@@ -12,7 +12,8 @@ export class CartService {
   cartItemsSubject = new BehaviorSubject<Product[]>([]);
   cartItems$ = this.cartItemsSubject.asObservable();
   private storageKey = 'cartItems';
-
+  private subtotalSource = new BehaviorSubject<number>(0);
+  currentSubtotal = this.subtotalSource.asObservable();
   constructor(
     private firestore: AngularFirestore,
     private auth: AngularFireAuth
@@ -118,5 +119,9 @@ export class CartService {
     this.cartItemsSubject.next([]);
     localStorage.removeItem('cartItems');
     this.updateFirestore([]);
+  }
+
+  changeSubtotal(subtotal: number) {
+    this.subtotalSource.next(subtotal);
   }
 }

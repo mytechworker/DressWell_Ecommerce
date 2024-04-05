@@ -24,6 +24,7 @@
     "@stripe/stripe-js": "^3.2.0",
     "angular2-notifications": "^16.0.1",
     "dotenv": "^16.4.5",
+    "file-saver": "^2.0.5",
     "firebase": "^10.9.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",

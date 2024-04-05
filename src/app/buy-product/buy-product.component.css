@@ -66,7 +66,7 @@ img {
 
 mat-toolbar {
   padding: 10px;
-  height: 50px;
+  height: 80px;
   margin-top: 10px;
   background-color: rgb(172, 212, 247);
   font-family: 'Times New Roman', Times, serif;
@@ -77,7 +77,7 @@ mat-toolbar {
   margin-left: 40%;
   margin-top: 15px;
   margin-bottom: 15px;
-  font-size: xx-large;
+  font-size: 45px;
 }
 
 .your-address {

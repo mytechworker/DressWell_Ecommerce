@@ -2,13 +2,27 @@
 <div class="container-wrapper">
   <div class="container">
     <h1>SHOPPING CART</h1>
+    <div class="header-container">
+      <mat-checkbox class="checkbox" [(ngModel)]="allSelected" (change)="toggleAllSelections()">
+        <h2>Select All</h2>
+      </mat-checkbox>
+      <h2 class="price-common">Price</h2>
+    </div>
+    <hr>
     <form class="cart-form" *ngFor="let item of cartItems">
-      <img [src]="item.image" alt="Product Image" class="product-image">
+      <div class="item-checkbox">
+        <mat-checkbox [(ngModel)]="item.selected" (change)="toggleSelection(item)"
+          [ngModelOptions]="{standalone: true}"></mat-checkbox>
+      </div>
+      <img (click)="navigateToProductDetails(item.id)" [src]="item.image" alt="Product Image" class="product-image">
       <div class="item-details">
-        <h2>{{ item.name }}</h2>
-        <p><b>Price:</b> {{ item.price | currency: '₹' }}</p>
+        <div class="name-and-price">
+          <h2><a (click)="navigateToProductDetails(item.id)">{{ item.name }}</a></h2>
+          <h2>{{ item.price | currency: '₹' }}</h2>
+        </div>
         <p><b>Color:</b> {{ item.color }}</p>
-        <p><b>Total Price:</b> {{ item.price * item.count | currency: '₹' }}</p>
+        <h3><b>Total Price:</b> {{ item.price * item.count | currency: '₹' }}</h3>
+        <br>
         <p><b>Count:</b>
           <button mat-icon-button color="primary" *ngIf="item.count > 1" (click)="removeCart(item)">
             <mat-icon>remove</mat-icon>
@@ -23,13 +37,17 @@
         </p>
       </div>
     </form>
-    <mat-card class="subtotal">
+
+    <mat-card class="subtotal" *ngIf="totalItems > 0">
       <mat-card-content>
         <div>
-          <p><b>SubTotal ({{totalItems}} Items) : {{ (totalAmount ) | currency: '₹' }} </b></p>
+          <h2>SubTotal ({{totalItems}} Items) : {{ (totalAmount ) | currency: '₹' }} </h2>
         </div>
       </mat-card-content>
     </mat-card>
+    <div *ngIf="totalItems === 0">
+      <h2>No item selected</h2>
+    </div>
   </div>
 </div>
 
@@ -44,7 +62,7 @@
         <p>Delivery Charge: ₹100.00</p>
       </div>
       <hr>
-      <p class="order-total"><b>Order Total: {{ totalAmount + 120.00 | currency: '₹' }}</b></p>
+      <p class="order-total"><b>Order Total: {{ totalAmount + 100.00 | currency: '₹' }}</b></p>
     </mat-card-content>
     <div class="buttons-container">
       <button mat-raised-button color="primary" (click)="buyProduct()">Proceed to Buy</button>

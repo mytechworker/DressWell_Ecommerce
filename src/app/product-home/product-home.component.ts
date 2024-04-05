@@ -3,10 +3,7 @@ import { Product } from '../product';
 import { CartService } from '../services/cart.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-} from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 const getObservable = (collection: AngularFirestoreCollection<Product>) => {
   const subject = new BehaviorSubject<Product[]>([]);
   collection.valueChanges({ idField: 'id' }).subscribe((val: Product[]) => {
@@ -14,6 +11,7 @@ const getObservable = (collection: AngularFirestoreCollection<Product>) => {
   });
   return subject;
 };
+
 @Component({
   selector: 'app-product-home',
   templateUrl: './product-home.component.html',
@@ -28,14 +26,11 @@ export class ProductHomeComponent {
     private store: AngularFirestore,
     private router: Router
   ) {}
-  product = getObservable(this.store.collection('product')) as Observable<
-    Product[]
-  >;
+  product = getObservable(this.store.collection('product')) as Observable<Product[]>;
 
   addToCart() {
     this.cartService.addToCart(this.task);
     this.productAddedtoCart();
-    // this.router.navigate(['/product']);
   }
   ngOnInit() {}
 

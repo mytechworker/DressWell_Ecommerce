@@ -8,10 +8,11 @@
 }
 
 .container {
+  background-color: white;
   border: 5px solid rgb(145, 143, 143);
   padding: 10px;
   margin-top: 20px;
-  max-width: 1200px;
+  width: 55% !important;
   overflow: auto;
   margin-left: 150px;
 }
@@ -20,6 +21,7 @@
   width: 200px;
   height: 300px;
   margin-right: 16px;
+  cursor: pointer;
 }
 
 .item-details {
@@ -64,6 +66,7 @@
   align-items: center;
   margin-bottom: 16px;
   background-color: white;
+  padding-top: 0;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -76,6 +79,40 @@
   z-index: 999;
 }
 
-.subtotal p {
-  margin-left: 900px;
+.subtotal h2{
+ display: flex;
+ justify-content: right;
+ width: 100%;
+}
+
+.name-and-price {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.name-and-price h2 a{
+ cursor: pointer;
+}
+
+.price-common{
+  display: flex;
+  justify-content: right;
+  width: 85%;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  margin: 15px;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.item-checkbox{
+  margin-right: 20px;
 }

@@ -9,6 +9,7 @@ export interface Product {
   count?: number;
   showFullDescription?: boolean;
   total?: number;
+  selected: boolean;
 }
 
 export interface UserDocument {

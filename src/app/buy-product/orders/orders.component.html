@@ -5,14 +5,11 @@
     </mat-card-title>
     <mat-card-content>
       <div>
-        <p><b>SubTotal : {{ (totalAmount ) | currency: '₹' }} </b></p>
+        <p><b>SubTotal : {{ totalAmount | currency: '₹' }} </b></p>
         <p>Delivery Charge: ₹100.00</p>
       </div>
       <hr>
-      <p class="order-total"><b>Order Total: {{ totalAmount + 120.00 | currency: '₹' }}</b></p>
+      <p class="order-total"><b>Order Total: {{ totalAmount + 100.00 | currency: '₹' }}</b></p>
     </mat-card-content>
-    <div class="buttons-container">
-      <button mat-raised-button color="primary" (click)="placeOrder()">Place the Order?</button>
-    </div>
   </mat-card>
 </div>

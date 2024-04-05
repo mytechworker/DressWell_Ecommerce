@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class KidsClothingComponent implements OnInit {
   product$: Observable<Product[]>;
-
+  productMessages: { [key: string]: string } = {};
   constructor(
     private firestore: AngularFirestore,
     private router: Router,
@@ -29,9 +29,19 @@ export class KidsClothingComponent implements OnInit {
 
   addToCart(product: Product) {
     this.cartService.addToCart(product);
+    this.productAddedtoCart(product.id);
   }
 
   navigateToProductDetails(productId: string) {
     this.router.navigate(['/product-details', productId]);
+  }
+
+  productAddedtoCart(productId: string) {
+    this.productMessages[productId] = 'Product Added to Cart Successfully!';
+    setTimeout(() => (this.productMessages[productId] = undefined), 3000);
+  }
+
+  getProductMessage(productId: string): string {
+    return this.productMessages[productId] || '';
   }
 }

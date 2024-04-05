@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { Product } from '../product';
 import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-cart',
@@ -10,31 +11,90 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit {
   cartItems: Product[] = [];
-  totalCartPrice: number = 0;
   totalAmount: number = 0;
   totalItems: number = 0;
+  allSelected: boolean = false;
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.cartService.cartItems$.subscribe((items) => {
       this.cartItems = items;
       this.calculateTotalAmount();
+      localStorage.setItem('total_amount', this.totalAmount.toString());
+      this.cartService.changeSubtotal(this.totalAmount);
+      this.restoreCheckboxState();
+      const selectAllState = localStorage.getItem('select_all');
+      if (this.cartItems.length === 0) {
+        this.allSelected = false;
+        localStorage.setItem('select_all', JSON.stringify(this.allSelected));
+      } else {
+        this.allSelected = selectAllState ? JSON.parse(selectAllState) : false;
+      }
+    });
+  }
+
+  calculateTotalAmount() {
+    this.totalAmount = 0;
+    this.totalItems = 0;
+    this.cartItems.forEach((item) => {
+      const storedState = localStorage.getItem(`selected_${item.id}`);
+      if (storedState && JSON.parse(storedState)) {
+        this.totalAmount += item.price * item.count;
+        this.totalItems += item.count;
+      }
     });
   }
 
   addToCart(item: Product): void {
+    item.selected = false;
     this.cartService.addToCart(item);
   }
 
   removeCart(item: Product): void {
     this.cartService.removeFromCart(item);
   }
-  calculateTotalAmount() {
-    this.totalAmount = this.cartService.getTotalAmount();
-    this.totalItems = this.cartService.getTotalItems();
-  }
+
   buyProduct() {
     this.router.navigate(['/buy']);
+  }
+
+  navigateToProductDetails(productId: string) {
+    this.router.navigate(['/product-details', productId]);
+  }
+
+  toggleSelection(item: Product): void {
+    localStorage.setItem(`selected_${item.id}`, JSON.stringify(item.selected));
+    this.calculateTotalAmount();
+    const allSelected = this.cartItems.every((item) => item.selected);
+    this.allSelected = allSelected;
+    localStorage.setItem('select_all', JSON.stringify(this.allSelected));
+    this.cdr.detectChanges();
+  }
+
+  toggleAllSelections(): void {
+    this.cartItems.forEach((item) => {
+      item.selected = this.allSelected;
+      localStorage.setItem(
+        `selected_${item.id}`,
+        JSON.stringify(item.selected)
+      );
+    });
+    localStorage.setItem('select_all', JSON.stringify(this.allSelected));
+    this.calculateTotalAmount();
+  }
+
+  restoreCheckboxState(): void {
+    this.cartItems.forEach((item) => {
+      const storedState = localStorage.getItem(`selected_${item.id}`);
+      if (storedState) {
+        item.selected = JSON.parse(storedState);
+      }
+    });
+    this.cdr.detectChanges();
   }
 }
