@@ -10,7 +10,6 @@ import { FirebaseService } from '../../services/firebase.service';
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
 })
-
 export class OrdersComponent implements OnInit {
   totalAmount: number = 0;
   cartItems: Product[];
@@ -23,7 +22,7 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit() {
     this.paymentService.totalAmount$.subscribe((amount) => {
-      this.totalAmount = amount;
+        this.totalAmount = amount;
     });
 
     this.route.params.subscribe((params) => {
@@ -41,13 +40,13 @@ export class OrdersComponent implements OnInit {
 
   calculateTotalAmount() {
     if (this.cartItems && this.cartItems.length > 0) {
-      this.totalAmount = this.cartItems.reduce((total, item) => {
+      let totalAmount = 0;
+      this.cartItems.forEach((item) => {
         if (item && item.price) {
-          return total + item.price;
-        } else {
-          return total;
+          totalAmount += Number(item.price);
         }
-      }, 0);
+      });
+      this.totalAmount = totalAmount;
     }
   }
 }
