@@ -1,20 +1,28 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Orders } from '../../../product';
-import { CartService } from '../../../services/cart.service';
-
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 @Component({
   selector: 'app-mini-orders',
   templateUrl: './mini-orders.component.html',
   styleUrls: ['./mini-orders.component.css'],
 })
-export class MiniOrdersComponent {
+export class MiniOrdersComponent implements OnInit {
   @Input() task: Orders | null = null;
   @Output() edit = new EventEmitter<Orders>();
   @Output() accept = new EventEmitter<Orders>();
   @Output() decline = new EventEmitter<Orders>();
   productMessage: string;
+  orderPlacedDate: Date | null = null;
+  constructor() {}
 
-  constructor(private cartService: CartService) {}
+  ngOnInit() {
+    if ( this.task && this.task.orderPlacedAt instanceof firebase.firestore.Timestamp) 
+      {
+        this.orderPlacedDate = this.task.orderPlacedAt.toDate();
+      }
+  }
+
   onAccept() {
     this.accept.emit(this.task);
   }

@@ -55,7 +55,9 @@ export interface Orders {
   userName: string;
   items: Product[];
   totalAmount: number;
+  orderPlacedAt: Date;
 }
+
 export interface OrderItem {
   productId: string;
   name: string;

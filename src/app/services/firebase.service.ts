@@ -204,4 +204,13 @@ export class FirebaseService {
       })
     );
   }
+  
+  getProductById(productId: string): Observable<Product | undefined> {
+    return this.firestore.collection<Product>('product').doc(productId).valueChanges().pipe(
+      catchError((error) => {
+        console.error('Error fetching product details:', error);
+        return of(undefined);
+      })
+    );
+  }
 }

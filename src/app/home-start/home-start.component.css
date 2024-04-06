@@ -20,17 +20,19 @@ nav a {
 
 .list {
   margin-top: 50px;
-  margin-left: 120px;
+  margin-left: 90px;
+  margin-right: 90px;
   display: flex;
   flex-wrap: wrap;
-  gap: 56px;
+  justify-content: space-between;
 }
 
 .item {
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 16px;
-  width: 250px;
+  width: calc(33.33% - 16px);
+  margin-bottom: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
 
@@ -69,50 +71,21 @@ nav a {
   color: #555;
 }
 
-
-.slider {
-  width: 100%;
+@media screen and (max-width: 1200px) {
+  .list {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
 }
 
-.mat-slider-horizontal {
-  height: auto;
+@media screen and (max-width: 768px) {
+  .item {
+    width: calc(50% - 16px);
+  }
 }
 
-.mat-slider-thumb-label {
-  color: #000;
-}
-
-.mat-slider-ticks {
-  display: none;
-}
-
-.mat-slider-track {
-  background-color: #ccc;
-}
-
-.mat-slider-thumb {
-  background-color: #007bff;
-}
-
-.mat-slider-horizontal {
-  margin-bottom: 20px;
-}
-
-.mat-slider-wrapper {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
-}
-
-.mat-slider-tick {
-  display: none;
-}
-
-.mat-slider-tick-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.mat-slider-tick:last-child {
-  display: block;
+@media screen and (max-width: 480px) {
+  .item {
+    width: calc(100% - 16px);
+  }
 }

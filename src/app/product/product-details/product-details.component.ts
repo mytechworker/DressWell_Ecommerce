@@ -44,7 +44,7 @@ export class ProductDetailsComponent {
     this.isAddedToWishlist = storedWishlistStatus
       ? JSON.parse(storedWishlistStatus)
       : false;
-}
+  }
   ngOnInit() {
     this.isAuthenticated = this.authService.isSignedIn;
     this.route.params.subscribe((params) => {
@@ -62,8 +62,7 @@ export class ProductDetailsComponent {
       }
     });
     if (this.currentUser) {
-      this.wishlistService
-        .isProductInWishlist(this.currentUser.userId, this.productId)
+      this.wishlistService.isProductInWishlist(this.currentUser.userId, this.productId)
         .then((isInWishlist) => {
           this.isAddedToWishlist = isInWishlist;
         });
@@ -73,9 +72,7 @@ export class ProductDetailsComponent {
   loadSelectedRating(): void {
     const selectedRatingKey = `selectedRating_${this.currentUser.userId}_${this.productId}`;
     const storedSelectedRating = localStorage.getItem(selectedRatingKey);
-    this.selectedRating = storedSelectedRating
-      ? parseInt(storedSelectedRating, 10)
-      : 0;
+    this.selectedRating = storedSelectedRating ? parseInt(storedSelectedRating, 10): 0;
     this.updateStars();
   }
 
@@ -85,15 +82,12 @@ export class ProductDetailsComponent {
   }
 
   loadRatings(): void {
-    this.wishlistService
-      .getRatingsForProduct(this.productId)
+    this.wishlistService.getRatingsForProduct(this.productId)
       .subscribe((userRatings) => {
         const totalRatings = userRatings.length;
         if (totalRatings > 0) {
           const sumOfRatings = userRatings.reduce(
-            (acc, userRating) => acc + userRating.rating,
-            0
-          );
+            (acc, userRating) => acc + userRating.rating, 0);
           this.averageRating = sumOfRatings / totalRatings;
           this.updateStars();
         }
@@ -102,26 +96,21 @@ export class ProductDetailsComponent {
 
   updateStars(): void {
     this.stars.forEach((star) => {
-      star.class =
-        star.id <= this.averageRating ? 'star-gold star' : 'star-gray star';
+      star.class = star.id <= this.averageRating ? 'star-gold star' : 'star-gray star';
     });
   }
 
   getProductDetails() {
-    this.store
-      .collection('product')
-      .doc(this.productId)
-      .valueChanges()
-      .subscribe((product: Product) => {
+    this.store.collection('product').doc(this.productId).valueChanges().subscribe((product: Product) => {
         this.product = product;
       });
   }
+
   selectStar(value): void {
     this.selectedRating = value;
     this.saveSelectedRating();
     this.stars.forEach((star) => {
-      star.class =
-        star.id <= this.selectedRating ? 'star-gold star' : 'star-gray star';
+      star.class = star.id <= this.selectedRating ? 'star-gold star' : 'star-gray star';
     });
     this.wishlistService.submitRating(
       this.currentUser.userId,
@@ -145,28 +134,21 @@ export class ProductDetailsComponent {
 
   private loadWishlistState(): void {
     const wishlistStateKey = `wishlistState_${this.currentUser.userId}`;
-    const wishlistState =
-      JSON.parse(localStorage.getItem(wishlistStateKey)) || {};
+    const wishlistState = JSON.parse(localStorage.getItem(wishlistStateKey)) || {};
     this.isAddedToWishlist = wishlistState[this.productId] || false;
   }
 
   private saveWishlistState(): void {
     const wishlistStateKey = `wishlistState_${this.currentUser.userId}`;
-    const wishlistState =
-      JSON.parse(localStorage.getItem(wishlistStateKey)) || {};
+    const wishlistState = JSON.parse(localStorage.getItem(wishlistStateKey)) || {};
     wishlistState[this.productId] = this.isAddedToWishlist;
     localStorage.setItem(wishlistStateKey, JSON.stringify(wishlistState));
   }
 
   buyProduct() {
-    if (this.authService.isSignedIn == true) {
-      this.cartService.addToCart(this.product);
-      this.router.navigate(['/buy']);
-    } else {
-      this.router.navigate(['/auth']);
-    }
+    this.router.navigate(['/buy', this.productId]);
   }
-
+  
   addToCart() {
     this.cartService.addToCart(this.product);
     this.productAddedtoCart();

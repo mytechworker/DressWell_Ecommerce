@@ -87,13 +87,20 @@ mat-toolbar {
   text-decoration: underline;
 }
 
-.pdf-buttons{
+.pdf-buttons {
   margin-left: 50px;
-  button{
+
+  button {
     height: 70px;
     margin-top: 50px;
     margin-right: 30px;
     width: 200px;
     font-size: 20px;
   }
+}
+
+button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }

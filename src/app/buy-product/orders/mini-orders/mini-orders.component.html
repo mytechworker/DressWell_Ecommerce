@@ -10,6 +10,9 @@
         <p> <b>User Name: </b>
             {{ task.userName }}
         </p>
+        <p> <b>Order Placed At:</b>
+            {{ orderPlacedDate | date: 'medium' }}
+        </p>                              
         <b> User's Orders List:  </b>
         <table mat-table [dataSource]="task.items" class="mat-elevation-z8">
 

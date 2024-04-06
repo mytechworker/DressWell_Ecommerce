@@ -1,8 +1,8 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
-import { Address, Orders, UserDocument } from '../product';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Address, Orders, Product, UserDocument } from '../product';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FirebaseService } from '../services/firebase.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import jsPDF from 'jspdf';
 import { UserDataService } from '../services/user-data.service';
 import { FormGroup } from '@angular/forms';
@@ -16,7 +16,79 @@ import { saveAs } from 'file-saver';
   templateUrl: './buy-product.component.html',
   styleUrls: ['./buy-product.component.css'],
 })
-export class BuyProductComponent {
+// export class BuyProductComponent {
+//   isAddress = false;
+//   upiApps = false;
+//   upiAppsValue: string = '';
+//   currentUser: UserDocument | null = null;
+//   user: UserDocument[] = [];
+//   orders: Orders[] = [];
+//   userForm: FormGroup | null = null;
+//   isDataLoaded = false;
+//   addresses: Address[] = [];
+//   acceptedOrders$: Observable<Orders[]> = of([]);
+//   @ViewChild('htmlData') htmlData!: ElementRef;
+//   constructor(
+//     private firebaseService: FirebaseService,
+//     private afAuth: AngularFireAuth,
+//     private router: Router,
+//     private userDataService: UserDataService,
+//     private ordersService: OrderService,
+//     private route: ActivatedRoute
+//   ) {}
+//   task: Address;
+//   @Output() edit = new EventEmitter<Address>();
+//   fulladdress: any = null;
+
+//   ngOnInit() {
+//     this.userDataService.userForm$.subscribe((userForm) => {
+//       if (userForm !== null) {
+//         this.userForm = userForm;
+//       }
+//     });
+//     this.afAuth.authState.subscribe((user) => {
+//       if (user) {
+//         this.firebaseService.getUserById(user.uid).subscribe(
+//           (userData) => {
+//             this.userDataService.setCurrentUser(userData);
+//             this.fetchAddresses(userData.userId);
+//             this.currentUser = userData as UserDocument;
+//             this.ordersService.getAcceptedOrdersByUser(user.uid)
+//               .subscribe((userAcceptedOrders) => {
+//                 this.acceptedOrders$ = of(userAcceptedOrders);
+//               });
+//           },
+//           (error) => {
+//             console.error('Error fetching user data:', error);
+//             this.isDataLoaded = true;
+//           }
+//         );
+//       }
+//     });
+//     this.route.params.subscribe(params => {
+//       const productId = params['id'];
+//       // Fetch product details using productId, such as name and price
+//       // Update component with fetched product details
+//     });
+//   }
+//   selectedRadioButton: string | null = null;
+
+//   isAddressRight() {
+//     this.isAddress = !this.isAddress;
+//   }
+
+//   updateUpiApps(): void {
+//     this.upiApps = !this.upiApps;
+//   }
+
+//   fetchAddresses(userId: string) {
+//     this.firebaseService.getAddressById(userId).subscribe((addresses) => {
+//       this.userDataService.setAddresses(addresses);
+//       this.addresses = addresses;
+//       this.isDataLoaded = true;
+//     })
+//   }
+export class BuyProductComponent implements OnInit {
   isAddress = false;
   upiApps = false;
   upiAppsValue: string = '';
@@ -27,24 +99,36 @@ export class BuyProductComponent {
   isDataLoaded = false;
   addresses: Address[] = [];
   acceptedOrders$: Observable<Orders[]> = of([]);
+  product: Product | undefined;
+  productId: string | undefined;
+  totalAmount: number = 0;
+
   @ViewChild('htmlData') htmlData!: ElementRef;
+
   constructor(
     private firebaseService: FirebaseService,
     private afAuth: AngularFireAuth,
-    private router: Router,
     private userDataService: UserDataService,
-    private ordersService: OrderService
+    private ordersService: OrderService,
+    private route: ActivatedRoute
   ) {}
+
   task: Address;
   @Output() edit = new EventEmitter<Address>();
   fulladdress: any = null;
 
   ngOnInit() {
+    this.route.params.subscribe((params) => {
+      this.productId = params['id'];
+      this.getProductDetails();
+    });
+
     this.userDataService.userForm$.subscribe((userForm) => {
       if (userForm !== null) {
         this.userForm = userForm;
       }
     });
+
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.firebaseService.getUserById(user.uid).subscribe(
@@ -52,10 +136,9 @@ export class BuyProductComponent {
             this.userDataService.setCurrentUser(userData);
             this.fetchAddresses(userData.userId);
             this.currentUser = userData as UserDocument;
-            this.ordersService.getAcceptedOrdersByUser(user.uid)
-              .subscribe((userAcceptedOrders) => {
+            this.ordersService.getAcceptedOrdersByUser(user.uid).subscribe((userAcceptedOrders) => {
                 this.acceptedOrders$ = of(userAcceptedOrders);
-              });
+            });
           },
           (error) => {
             console.error('Error fetching user data:', error);
@@ -65,7 +148,26 @@ export class BuyProductComponent {
       }
     });
   }
-  selectedRadioButton: string | null = null;
+
+  getProductDetails() {
+    if (this.productId) {
+      this.firebaseService.getProductById(this.productId).subscribe(
+        (product) => {
+          this.product = product;
+          this.calculateTotalAmount();
+        },
+        (error) => {
+          console.error('Error fetching product details:', error);
+        }
+      );
+    }
+  }
+
+  calculateTotalAmount() {
+    if (this.product) {
+      this.totalAmount = this.product.price;
+    }
+  }
 
   isAddressRight() {
     this.isAddress = !this.isAddress;
@@ -75,16 +177,12 @@ export class BuyProductComponent {
     this.upiApps = !this.upiApps;
   }
 
-  onPayment() {
-    this.router.navigate(['/payment']);
-  }
-
   fetchAddresses(userId: string) {
     this.firebaseService.getAddressById(userId).subscribe((addresses) => {
       this.userDataService.setAddresses(addresses);
       this.addresses = addresses;
       this.isDataLoaded = true;
-    })
+    });
   }
 
   generatePDF() {
@@ -124,6 +222,7 @@ export class BuyProductComponent {
       pdf.link(startX2, startY, iconSize, iconSize, {
         url: 'https://twitter.com/',
       });
+
       pdf.addImage(
         'assets/twitter-icon.png',
         'PNG',
@@ -132,9 +231,11 @@ export class BuyProductComponent {
         iconSize,
         iconSize
       );
+
       pdf.link(startX3, startY, iconSize, iconSize, {
         url: 'https://www.youtube.com/',
       });
+
       pdf.addImage(
         'assets/youtube-icon.png',
         'PNG',
@@ -143,9 +244,11 @@ export class BuyProductComponent {
         iconSize,
         iconSize
       );
+
       pdf.link(startX4, startY, iconSize, iconSize, {
         url: 'https://www.instagram.com/',
       });
+      
       pdf.addImage(
         'assets/instagram-icon.png',
         'PNG',

@@ -65,9 +65,9 @@ export class CartComponent implements OnInit {
   }
 
   buyProduct() {
-    if (this.authService.isSignedIn == true) {
+if (this.authService.isSignedIn == true) {
       this.router.navigate(['/buy']);
-    } else {
+} else {
       this.router.navigate(['/auth']);
     }
   }

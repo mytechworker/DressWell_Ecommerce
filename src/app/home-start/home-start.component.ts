@@ -22,7 +22,7 @@ export class HomeStartComponent {
   product: Observable<Product[]>;
 
   ngOnInit() {
-    this.productCollection = this.store.collection<Product>('product', ref => ref.limit(4));
+    this.productCollection = this.store.collection<Product>('product', ref => ref.limit(3));
     this.product = getObservable(this.productCollection);
   }
 }

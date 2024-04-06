@@ -19,7 +19,7 @@ export class PaymentComponent implements OnInit {
   orderId: string = '';
   alertShown: boolean = false;
   handler: any = null;
-
+  
   constructor(
     private cartService: CartService,
     private store: AngularFirestore,
@@ -27,30 +27,24 @@ export class PaymentComponent implements OnInit {
     private router: Router,
     private paymentService: PaymentService
   ) {}
+
   ngOnInit() {
-    this.loadStripe();
-    const storedTotalAmount = localStorage.getItem('total_amount');
-    if (storedTotalAmount) {
-      this.totalAmount = parseFloat(storedTotalAmount);
-      this.cartService.cartItems$.subscribe((items) => {
-        this.cartItems = items;
-      });
-      this.paymentService.totalAmount$.subscribe(amount => {
-        this.totalAmount = amount;
-      });
-    }
+    this.cartService.cartItems$.subscribe(items => {
+      this.cartItems = items;
+      this.calculateTotalAmount();
+    });
+
+    this.paymentService.totalAmount$.subscribe(amount => {
+      this.totalAmount = amount;
+    });
   }
 
   calculateTotalAmount() {
-    let totalAmount = 0;
-    this.cartItems.forEach((item) => {
-      if (item.selected) {
-        totalAmount += item.price * item.count;
-      }
-    });
-    console.log('Total amount calculated:', totalAmount);
-    this.totalAmount = totalAmount;
+    this.totalAmount = this.cartItems.reduce((total, item) => {
+      return total + (item.price * item.count);
+    }, 0);
   }
+
 
   pay(amount: number) {
     var handler = (<any>window).StripeCheckout.configure({
@@ -61,11 +55,9 @@ export class PaymentComponent implements OnInit {
           console.error('Stripe token creation error:', token.error);
           alert('Error occurred during payment: ' + token.error.message);
         } else {
-          console.log('Token created:', token);
           alert('Payment Success!!');
           this.placeOrder();
           this.paymentService.emitPaymentSuccess();
-          this.totalAmount = 0;
         }
       },
       closed: (data: any) => {
@@ -83,7 +75,6 @@ export class PaymentComponent implements OnInit {
       description: '2 widgets',
       amount: amount * 100,
     });
-    console.log('amount', amount);
   }
 
   loadStripe() {
@@ -97,7 +88,6 @@ export class PaymentComponent implements OnInit {
           key: 'pk_test_51OUQ2YSBsRjMaYOe1phMU8RuXK3UsacqVQ9wdcdl8w53r3DXxHMkMZoFIqKH9lqiitvrqttRjfifDiBnXrc4C2eh00jlSA8Rl3',
           locale: 'auto',
           token: function (token: any) {
-            console.log(token);
             alert('Payment Success!!');
           },
         });
@@ -113,12 +103,14 @@ export class PaymentComponent implements OnInit {
     }
     this.authStateSubscription = this.afAuth.authState.subscribe((user) => {
       if (user) {
+        const orderPlacedAt = new Date();
         const order: Orders = {
           status: 'In Progress',
           userId: user.uid,
           userName: user.displayName || user.email,
           items: this.cartItems,
           totalAmount: this.totalAmount,
+          orderPlacedAt: orderPlacedAt
         };
         this.store
           .collection('orders')
