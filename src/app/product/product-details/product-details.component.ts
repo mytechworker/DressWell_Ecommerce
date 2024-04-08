@@ -7,6 +7,7 @@ import { WishlistService } from '../../services/wishlist.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/authenticate.service';
+import { PaymentService } from '../../services/payment.service';
 
 @Component({
   selector: 'app-product-details',
@@ -38,7 +39,8 @@ export class ProductDetailsComponent {
     private firebaseService: FirebaseService,
     private cartService: CartService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private paymentService: PaymentService
   ) {
     const storedWishlistStatus = localStorage.getItem('isAddedToWishlist');
     this.isAddedToWishlist = storedWishlistStatus
@@ -146,9 +148,11 @@ export class ProductDetailsComponent {
   }
 
   buyProduct() {
+    const productPrice = this.product.price || 0;
+    this.paymentService.updateTotalAmount(productPrice);
     this.router.navigate(['/buy', this.productId]);
   }
-  
+
   addToCart() {
     this.cartService.addToCart(this.product);
     this.productAddedtoCart();
