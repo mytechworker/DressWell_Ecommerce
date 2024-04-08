@@ -16,6 +16,7 @@ export class CartComponent implements OnInit {
   totalAmount: number = 0;
   totalItems: number = 0;
   allSelected: boolean = false;
+  delivery_charge: number = 100;
 
   constructor(
     private cartService: CartService,

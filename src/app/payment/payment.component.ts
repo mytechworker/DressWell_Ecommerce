@@ -19,7 +19,7 @@ export class PaymentComponent implements OnInit {
   orderId: string = '';
   alertShown: boolean = false;
   handler: any = null;
-  
+  delivery_charge: number = 100;
   constructor(
     private cartService: CartService,
     private store: AngularFirestore,
@@ -33,9 +33,9 @@ export class PaymentComponent implements OnInit {
       this.cartItems = items;
       this.calculateTotalAmount();
     });
-
+  
     this.paymentService.totalAmount$.subscribe(amount => {
-      this.totalAmount = amount;
+      this.totalAmount = Number(amount) + this.delivery_charge;
     });
   }
 

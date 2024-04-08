@@ -13,6 +13,7 @@ import { FirebaseService } from '../../services/firebase.service';
 export class OrdersComponent implements OnInit {
   totalAmount: number = 0;
   cartItems: Product[];
+  delivery_charge: number = 100;
 
   constructor(
     private paymentService: PaymentService,

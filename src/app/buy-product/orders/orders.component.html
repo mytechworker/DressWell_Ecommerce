@@ -6,10 +6,10 @@
     <mat-card-content>
       <div>
         <p><b>SubTotal : {{ totalAmount | currency: '₹' }} </b></p>
-        <p>Delivery Charge: ₹100.00</p>
+        <p>Delivery Charge: {{ delivery_charge | currency: '₹' }}</p>
       </div>
       <hr>
-      <p class="order-total"><b>Order Total: {{ totalAmount + 100.00 | currency: '₹' }}</b></p>
+      <p class="order-total"><b>Order Total: {{ totalAmount + delivery_charge | currency: '₹' }}</b></p>
     </mat-card-content>
   </mat-card>
 </div>
