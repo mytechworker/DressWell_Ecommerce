@@ -1,6 +1,6 @@
   .category-table {
     margin-top: 20px;
-    background-image: linear-gradient(rgb(144, 229, 250), rgb(233, 233, 226));
+    /* background-image: linear-gradient(rgb(144, 229, 250), rgb(233, 233, 226)); */
   }
 
   .mat-cell,
@@ -27,7 +27,7 @@
   }
 
   mat-paginator {
-    background-image: linear-gradient( rgb(154, 234, 238),rgb(174, 165, 248));
+    /* background-image: linear-gradient( rgb(154, 234, 238),rgb(174, 165, 248)); */
     max-width: 1300px;
     margin-top: 20px;
     font-weight: 700;

@@ -27,10 +27,6 @@
   }
 }
 
-.main {
-  background-color: #fff;
-}
-
 .main.header {
   position: fixed;
   top: 0;

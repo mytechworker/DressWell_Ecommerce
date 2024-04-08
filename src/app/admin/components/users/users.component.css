@@ -7,7 +7,7 @@ mat-row {
   justify-content: space-between;
   align-items: center;
   height: 48px;
-  background-image: linear-gradient(rgb(144, 229, 250), rgb(233, 233, 226));
+  /* background-image: linear-gradient(rgb(144, 229, 250), rgb(233, 233, 226)); */
   font-size: medium;
   font-style: italic;
 }
@@ -17,7 +17,7 @@ mat-header-row {
   justify-content: space-between;
   align-items: center;
   height: 48px;
-  background-image: linear-gradient(rgb(174, 165, 248), rgb(154, 234, 238));
+  /* background-image: linear-gradient(rgb(174, 165, 248), rgb(154, 234, 238)); */
   font-size: larger;
 }
 
@@ -29,26 +29,14 @@ mat-slide-toggle {
   margin-left: 8px;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-}
-
-.pagination-container {
-  margin-top: 16px;
-  display: flex;
-  justify-content: center;
-}
-
 .noaddress {
   color: red;
 }
 
 mat-paginator {
-  background-image: linear-gradient( rgb(154, 234, 238),rgb(174, 165, 248));
+  /* background-image: linear-gradient( rgb(154, 234, 238),rgb(174, 165, 248)); */
   font-weight: 700;
+  margin-top: 16px;
 }
 
 .user-table{
@@ -64,5 +52,5 @@ mat-paginator {
 }
 
 .search-bar{
-  background-image: linear-gradient(rgb(174, 165, 248), rgb(154, 234, 238));
+  /* background-image: linear-gradient(rgb(174, 165, 248), rgb(154, 234, 238)); */
 }
