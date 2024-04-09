@@ -2,7 +2,7 @@
   <h2>Payment Checkout</h2>
   <div class="row mt-5">
     <div class="col-md-4">
-      <button class="button" (click)="pay(totalAmount)">Pay {{ totalAmount | currency: '₹' }}</button>
+      <button class="button" (click)="pay(totalAmount + delivery_charge)">Pay {{ totalAmount + delivery_charge | currency: '₹' }}</button>
     </div>
   </div>
   <p class="mt-5"></p>

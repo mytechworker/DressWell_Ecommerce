@@ -2,7 +2,7 @@
 <div>
   <h2>Your Orders</h2>
   <div class="col-md-4 text-right">
-    <button class="btn btn-success btn-block" (click)="generatePDF()">Download PDF</button>
+    <button class="btn btn-success btn-block" (click)="downloadPdf()">Download PDF</button>
     <button class="btn btn-primary btn-block" (click)="openPDF()">Open PDF</button>
   </div>
   <div *ngFor="let order of acceptedOrders$ | async;  let i = index">
@@ -11,6 +11,7 @@
         <h3>{{ i + 1 }} )</h3>
         <p><b>Total Amount: </b> {{ order.totalAmount | currency: '₹' }}</p>
         <p><b>Order ID: </b> {{ order.id }}</p>
+        <p><b>Status:</b> {{order.status}}</p>
         <b>Your Order's List: </b>
         <table mat-table [dataSource]="order.items" class="mat-elevation-z8">
 

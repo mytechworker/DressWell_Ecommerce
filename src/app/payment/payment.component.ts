@@ -32,10 +32,12 @@ export class PaymentComponent implements OnInit {
     this.cartService.cartItems$.subscribe(items => {
       this.cartItems = items;
       this.calculateTotalAmount();
+      this.updateDeliveryCharge();
     });
   
     this.paymentService.totalAmount$.subscribe(amount => {
-      this.totalAmount = Number(amount) + this.delivery_charge;
+      this.totalAmount = Number(amount);
+      this.updateDeliveryCharge();
     });
   }
 
@@ -45,6 +47,13 @@ export class PaymentComponent implements OnInit {
     }, 0);
   }
 
+  updateDeliveryCharge() {
+    if (this.totalAmount > 0) {
+      this.delivery_charge = 100;
+    } else {
+      this.delivery_charge = 0;
+    }
+  }
 
   pay(amount: number) {
     var handler = (<any>window).StripeCheckout.configure({
@@ -58,6 +67,7 @@ export class PaymentComponent implements OnInit {
           alert('Payment Success!!');
           this.placeOrder();
           this.paymentService.emitPaymentSuccess();
+          this.router.navigate(['/user-orders']);
         }
       },
       closed: (data: any) => {
@@ -69,13 +79,13 @@ export class PaymentComponent implements OnInit {
         }
       },
     });
-
+  
     handler.open({
       name: 'Demo Site',
       description: '2 widgets',
       amount: amount * 100,
     });
-  }
+  }  
 
   loadStripe() {
     if (!window.document.getElementById('stripe-script')) {
