@@ -32,9 +32,7 @@ export class UserOrdersComponent implements OnInit {
   addresses: Address[] = [];
   userForm: FormGroup | null = null;
   isDataLoaded = false;
-  product = getObservable(this.store.collection('product')) as Observable<
-    Product[]
-  >;
+  product = getObservable(this.store.collection('product')) as Observable<Product[]>;
   constructor(
     private ordersService: OrderService,
     private afAuth: AngularFireAuth,
@@ -42,7 +40,8 @@ export class UserOrdersComponent implements OnInit {
     private userDataService: UserDataService,
     private firebaseService: FirebaseService
   ) {}
-
+  orderPlacedDate: Date | null = null;
+  activeButton: string = '';
   ngOnInit() {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
@@ -51,9 +50,9 @@ export class UserOrdersComponent implements OnInit {
             this.userDataService.setCurrentUser(userData);
             this.fetchAddresses(userData.userId);
             this.currentUser = userData as UserDocument;
-            this.ordersService.getAcceptedOrdersByUser(user.uid).subscribe((userAcceptedOrders) => {
-                this.acceptedOrders$ = of(userAcceptedOrders);
-              });
+            this.fetchAcceptedOrders();
+            this.fetchDeclinedOrders();
+            this.fetchOrdersInProgress();
           },
           (error) => {
             console.error('Error fetching user data:', error);
@@ -68,7 +67,61 @@ export class UserOrdersComponent implements OnInit {
       }
     });
   }
-
+  
+  fetchOrdersInProgress() {
+    const userId = this.currentUser?.userId;
+    if (userId) {
+      this.ordersService.getOrdersInProgressForUser(userId).subscribe((userOrdersInProgress) => {
+        this.acceptedOrders$ = of(userOrdersInProgress);
+        if (userOrdersInProgress.length > 0) {
+          const order = userOrdersInProgress[0];
+          if (order.orderPlacedAt instanceof Date) {
+            this.orderPlacedDate = order.orderPlacedAt;
+          } else {
+            this.orderPlacedDate = order.orderPlacedAt;
+          }
+        }
+      });
+    }
+    this.activeButton = '';
+  }
+  
+  fetchAcceptedOrders() {
+    const userId = this.currentUser?.userId;
+    if (userId) {
+      this.ordersService.getAcceptedOrdersByUser(userId).subscribe((userAcceptedOrders) => {
+        this.acceptedOrders$ = of(userAcceptedOrders);
+        if (userAcceptedOrders.length > 0) {
+          const order = userAcceptedOrders[0];
+          if (order.orderPlacedAt instanceof Date) {
+            this.orderPlacedDate = order.orderPlacedAt;
+          } else {
+            this.orderPlacedDate = order.orderPlacedAt;
+          }
+        }
+      });
+      this.activeButton = 'acceptedOrders';
+    }
+  }
+  
+  fetchDeclinedOrders() {
+    const userId = this.currentUser?.userId;
+    if (userId) {
+      this.ordersService.getDeclinedOrdersByUser(userId).subscribe((userDeclinedOrders) => {
+        this.acceptedOrders$ = of(userDeclinedOrders);
+        if (userDeclinedOrders.length > 0) {
+          const order = userDeclinedOrders[0];
+          if (order.orderPlacedAt instanceof Date) {
+            this.orderPlacedDate = order.orderPlacedAt;
+          } else {
+            this.orderPlacedDate = order.orderPlacedAt;
+          }
+        }
+      });
+      this.activeButton = 'declinedOrders';
+    }
+  }
+  
   fetchAddresses(userId: string) {
     this.firebaseService.getAddressById(userId).subscribe((addresses) => {
       this.userDataService.setAddresses(addresses);

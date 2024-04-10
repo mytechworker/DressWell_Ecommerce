@@ -8,6 +8,7 @@ import { FirebaseService } from '../../services/firebase.service';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/authenticate.service';
 import { PaymentService } from '../../services/payment.service';
+import { OrderService } from '../../services/orders.service';
 
 @Component({
   selector: 'app-product-details',
@@ -31,7 +32,7 @@ export class ProductDetailsComponent {
   averageRating: number = 0;
   productMessage: string;
   zoomLevel = 1;
-  constructor(
+    constructor(
     private route: ActivatedRoute,
     private store: AngularFirestore,
     private wishlistService: WishlistService,
@@ -40,7 +41,8 @@ export class ProductDetailsComponent {
     private cartService: CartService,
     private router: Router,
     private authService: AuthService,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private orderService: OrderService
   ) {
     const storedWishlistStatus = localStorage.getItem('isAddedToWishlist');
     this.isAddedToWishlist = storedWishlistStatus
@@ -148,9 +150,64 @@ export class ProductDetailsComponent {
   }
 
   buyProduct() {
-    const productPrice = this.product.price || 0;
-    this.paymentService.updateTotalAmount(productPrice);
-    this.router.navigate(['/buy', this.productId]);
+    const productPrice = Number(this.product.price) || 0;
+    const count = 1;
+    const handler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_51OUQ2YSBsRjMaYOe1phMU8RuXK3UsacqVQ9wdcdl8w53r3DXxHMkMZoFIqKH9lqiitvrqttRjfifDiBnXrc4C2eh00jlSA8Rl3',
+      locale: 'auto',
+      token: (token: any) => {
+        if (token && token.error) {
+          console.error('Stripe token creation error:', token.error);
+          alert('Error occurred during payment: ' + token.error.message);
+        } else {
+          alert('Payment Success!!');
+          this.paymentService.updateTotalAmount(productPrice);
+
+          const order = {
+            userId: this.currentUser.userId,
+            id: this.productId,
+            totalAmount: productPrice * count,
+            status: 'In Progress',
+            userName: this.currentUser.email || this.currentUser.name,
+            items: [
+              {
+                ...this.product,
+                count: count,
+              },
+            ],
+            count: count,
+            orderPlacedAt: new Date(),
+          };
+
+          this.orderService.placeOrder(order).subscribe(
+            () => {
+              console.log('order', order);
+
+              alert('Your order is in Progress!');
+              console.log('Order placed successfully!');
+              this.router.navigate(['/user-orders']);
+            },
+            (error) => {
+              console.error('Error placing order:', error);
+            }
+          );
+        }
+      },
+      closed: (data: any) => {
+        if (data && data.error) {
+          console.error('Stripe Checkout closed with an error:', data.error);
+          alert('Error occurred during payment. Please try again.');
+        } else {
+          console.log('Stripe Checkout closed without an error.');
+        }
+      },
+    });
+
+    handler.open({
+      name: 'Demo Site',
+      description: 'Product Purchase',
+      amount: productPrice * 100 + 100.0,
+    });
   }
 
   addToCart() {

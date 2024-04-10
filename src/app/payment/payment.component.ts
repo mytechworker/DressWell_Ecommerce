@@ -29,6 +29,7 @@ export class PaymentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadStripe();
     this.cartService.cartItems$.subscribe(items => {
       this.cartItems = items;
       this.calculateTotalAmount();
@@ -66,8 +67,6 @@ export class PaymentComponent implements OnInit {
         } else {
           alert('Payment Success!!');
           this.placeOrder();
-          this.paymentService.emitPaymentSuccess();
-          this.router.navigate(['/user-orders']);
         }
       },
       closed: (data: any) => {
@@ -132,6 +131,7 @@ export class PaymentComponent implements OnInit {
             localStorage.removeItem('cartItems');
             if (!this.alertShown) {
               alert('Your order is in Progress!');
+              this.router.navigate(['/user-orders']);
               this.alertShown = true;
               if (this.authStateSubscription) {
                 this.authStateSubscription.unsubscribe();

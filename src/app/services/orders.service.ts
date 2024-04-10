@@ -1,6 +1,6 @@
 // order.service.ts
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { Orders } from '../product';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 
@@ -29,6 +29,11 @@ export class OrderService {
       .valueChanges({ idField: 'orderId' });
   }
 
+  getDeclinedOrdersByUser(userId: string): Observable<Orders[]> {
+    return this.firestore.collection<Orders>('orders-declined', (ref) => ref.where('userId', '==', userId))
+      .valueChanges({ idField: 'orderId' });
+  }
+
   getDeclinedOrders(): Observable<Orders[]> {
     return this.declinedOrdersCollection.valueChanges({ idField: 'orderId' });
   }
@@ -36,6 +41,7 @@ export class OrderService {
   getOrders(): Observable<Orders[]> {
     return this.ordersCollection.valueChanges({ idField: 'id' });
   }
+  
   moveOrder(order: Orders, status: string): void {
     this.firestore.collection('orders').doc(order.id).delete().then(() => {
         order.status = status;
@@ -54,4 +60,21 @@ export class OrderService {
   getGroupedOrders(): Observable<any[]> {
     return this.firestore.collection('yourCollectionName').valueChanges();
   }
+
+  getOrdersInProgressForUser(userId: string): Observable<Orders[]> {
+    return this.firestore.collection<Orders>('orders', ref =>
+      ref.where('status', '==', 'In Progress')
+         .where('userId', '==', userId)
+    ).valueChanges({ idField: 'id' });
+  }
+
+  getOrdersForUser(userId: string): Observable<Orders[]> {
+    return this.firestore.collection<Orders>('orders', ref =>
+      ref.where('userId', '==', userId)
+    ).valueChanges({ idField: 'id' });
+  }
+
+  placeOrder(order: Orders): Observable<any> {
+    return from(this.firestore.collection('orders').add(order));
+  }  
 }

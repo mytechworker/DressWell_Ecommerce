@@ -6,10 +6,12 @@
       <div *ngFor="let order of declinedOrders$ | async;  let i = index">
         <mat-card class="item">
           <mat-card-content>
-            <h2>{{ i + 1 }} - {{ order.userName }}</h2>
-            <p><b>Total Amount: </b> {{ order.totalAmount | currency: '₹' }}</p>
-            <p><b>User Name: </b> {{ order.userName }}</p>
+            <h2>{{ i + 1 }} ) {{ order.userName }}</h2>
+            <p><b>Delivery Charge: </b>{{ 100.00 | currency: '₹' }}</p> 
+            <p><b>Total Amount: </b> {{ order.totalAmount + 100.00 | currency: '₹' }} (Delivery Charge included)</p>
             <p><b>Order ID: </b> {{ order.id }}</p>
+            <p><b>Order Placed At:</b> {{ order.orderPlacedAt | timestampToDate }}</p>
+            <p><b>Status:</b> {{order.status}}</p>
             <b>User's Orders List: </b>
             <table mat-table [dataSource]="order.items" class="mat-elevation-z8">
   

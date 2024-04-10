@@ -38,7 +38,6 @@ export class BuyProductComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private userDataService: UserDataService,
     private ordersService: OrderService,
-    private route: ActivatedRoute
   ) {}
 
   task: Address;
@@ -46,11 +45,6 @@ export class BuyProductComponent implements OnInit {
   fulladdress: any = null;
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.productId = params['id'];
-      this.getProductDetails();
-    });
-
     this.userDataService.userForm$.subscribe((userForm) => {
       if (userForm !== null) {
         this.userForm = userForm;
@@ -75,26 +69,6 @@ export class BuyProductComponent implements OnInit {
         );
       }
     });
-  }
-
-  getProductDetails() {
-    if (this.productId) {
-      this.firebaseService.getProductById(this.productId).subscribe(
-        (product) => {
-          this.product = product;
-          this.calculateTotalAmount();
-        },
-        (error) => {
-          console.error('Error fetching product details:', error);
-        }
-      );
-    }
-  }
-
-  calculateTotalAmount() {
-    if (this.product) {
-      this.totalAmount = this.product.price;
-    }
   }
 
   isAddressRight() {

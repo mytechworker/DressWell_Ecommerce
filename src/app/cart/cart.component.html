@@ -65,7 +65,7 @@
       <p class="order-total"><b>Order Total: {{ totalAmount + delivery_charge | currency: '₹' }}</b></p>
     </mat-card-content>
     <div class="buttons-container">
-      <button mat-raised-button color="primary" (click)="buyProduct()">Proceed to Buy</button>
+      <button mat-raised-button color="primary" (click)="buyProduct()" [disabled]="totalAmount === 0">Proceed to Buy</button>
     </div>
   </mat-card>
 </div>

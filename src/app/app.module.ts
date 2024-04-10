@@ -51,6 +51,7 @@ import { KidsClothingComponent } from './kids-clothing/kids-clothing.component';
 import { PaymentComponent } from './payment/payment.component';
 import { NgxStripeModule } from 'ngx-stripe';
 import { ReadNotificationComponent } from './read-notification/read-notification.component';
+import { TimestampToDatePipe } from './date.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -91,7 +92,8 @@ import { ReadNotificationComponent } from './read-notification/read-notification
     WomenClothingComponent,
     KidsClothingComponent,
     PaymentComponent,
-    ReadNotificationComponent
+    ReadNotificationComponent,
+    TimestampToDatePipe
   ],
   imports: [
     BrowserModule,

@@ -1,18 +1,11 @@
-<mat-card class="item" (dblclick)="edit.emit(task)">
+<mat-card class="item">
     <mat-card-content>
-        <h2>{{ task.id }}</h2>
-        <p> <b>Total Amount</b> 
-            {{ task.totalAmount | currency: '₹' }}
-        </p> 
-        <p> <b>Order ID:</b>
-            {{ task.id }}
-        </p>
-        <p> <b>User Name: </b>
-            {{ task.userName }}
-        </p>
-        <p> <b>Order Placed At:</b>
-            {{ orderPlacedDate | date: 'medium' }}
-        </p>                              
+        <h2>{{ task.userName }}</h2>
+        <p> <b>Delivery Charge: </b> {{ 100.00 | currency: '₹' }}</p> 
+        <p> <b>Order ID:</b>{{ task.id }}</p>
+        <p> <b>Total Amount</b>{{ task.totalAmount + 100.00 | currency: '₹' }} (Delivery Charge included)</p> 
+        <p> <b>User Name: </b>{{ task.userName }}</p>
+        <p> <b>Order Placed At:</b>{{ orderPlacedDate | date: 'medium' }}</p>                              
         <b> User's Orders List:  </b>
         <table mat-table [dataSource]="task.items" class="mat-elevation-z8">
 

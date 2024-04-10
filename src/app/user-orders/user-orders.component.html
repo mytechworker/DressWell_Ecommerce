@@ -1,18 +1,24 @@
 <app-header></app-header>
-<div>
-  <h2>Your Orders</h2>
+<div class="orders-container">
+  <h2  class="title">Your Orders</h2>
   <div class="col-md-4 text-right">
-    <button class="btn btn-success btn-block" (click)="downloadPdf()">Download PDF</button>
-    <button class="btn btn-primary btn-block" (click)="openPDF()">Open PDF</button>
+    <button (click)="downloadPdf()">Download PDF</button>
+    <button (click)="openPDF()">Open PDF</button>
+    <button (click)="fetchAcceptedOrders()" [ngClass]="{ 'active': activeButton === 'acceptedOrders' }">Accepted Orders</button>
+    <button (click)="fetchDeclinedOrders()" [ngClass]="{ 'active': activeButton === 'declinedOrders' }">Declined Orders</button>
   </div>
-  <div *ngFor="let order of acceptedOrders$ | async;  let i = index">
-    <mat-card class="item">
+  <ng-container *ngIf="(acceptedOrders$ | async)?.length; else noOrdersPlaced">
+    <div *ngFor="let order of acceptedOrders$ | async; let i = index">
+     <mat-card class="item">
       <mat-card-content>
-        <h3>{{ i + 1 }} )</h3>
-        <p><b>Total Amount: </b> {{ order.totalAmount | currency: '₹' }}</p>
+        <h1>{{ i + 1 }} ) {{ order.userName }}</h1>
+        <p><b>Delivery Charge: </b>{{ 100.00 | currency: '₹' }}</p> 
+        <p><b>Total Amount: </b> {{ order.totalAmount + 100.00 | currency: '₹' }} (Delivery Charge included)</p>
         <p><b>Order ID: </b> {{ order.id }}</p>
+        <p><b>Order Placed At:</b> {{ order.orderPlacedAt | timestampToDate }}</p>
         <p><b>Status:</b> {{order.status}}</p>
         <b>Your Order's List: </b>
+        <br><br>
         <table mat-table [dataSource]="order.items" class="mat-elevation-z8">
 
           <ng-container matColumnDef="sr-no">
@@ -41,4 +47,8 @@
       </mat-card-content>
     </mat-card>
   </div>
-</div>
+</ng-container>
+<ng-template #noOrdersPlaced>
+  <h1  class="no-orders-message">No orders placed</h1>
+</ng-template>
+  </div>

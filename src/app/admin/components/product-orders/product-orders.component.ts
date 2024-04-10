@@ -36,6 +36,7 @@ export class ProductOrdersComponent {
   handleEdit(order: Orders) {
     console.log('Order edited:', order);
   }
+  
   handleAccept(order: Orders) {
     const confirmation = window.confirm(
       'Are you sure you want to accept this order?'
@@ -58,6 +59,7 @@ export class ProductOrdersComponent {
   orderHistory() {
     this.router.navigate(['admin', 'orders-declined']);
   }
+  
   ordersAccepted() {
     this.router.navigate(['admin', 'orders-accepted']);
   }
