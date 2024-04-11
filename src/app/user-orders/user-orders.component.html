@@ -11,7 +11,7 @@
     <div *ngFor="let order of acceptedOrders$ | async; let i = index">
      <mat-card class="item">
       <mat-card-content>
-        <h1>{{ i + 1 }} ) {{ order.userName }}</h1>
+        <h1>{{ i + 1 }} )</h1>
         <p><b>Delivery Charge: </b>{{ 100.00 | currency: '₹' }}</p> 
         <p><b>Total Amount: </b> {{ order.totalAmount + 100.00 | currency: '₹' }} (Delivery Charge included)</p>
         <p><b>Order ID: </b> {{ order.id }}</p>
