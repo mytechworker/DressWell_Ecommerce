@@ -53,14 +53,6 @@ export class OrderService {
       });
   }
 
-  getOrdersByStatus(status: string): Observable<Orders[]> {
-    return this.firestore.collection<Orders>('orders', (ref) => ref.where('status', '==', status)).valueChanges({ idField: 'id' });
-  }
-
-  getGroupedOrders(): Observable<any[]> {
-    return this.firestore.collection('yourCollectionName').valueChanges();
-  }
-
   getOrdersInProgressForUser(userId: string): Observable<Orders[]> {
     return this.firestore.collection<Orders>('orders', ref =>
       ref.where('status', '==', 'In Progress')

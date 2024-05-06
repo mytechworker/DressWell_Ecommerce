@@ -50,7 +50,6 @@ export class WishlistService {
     productId: string,
     rating: number
   ): Promise<void> {
-    const ratingItem = { userId, rating };
     return this.firestore.collection(`ratings`).doc(productId).set({ [userId]: rating }, { merge: true });
   }
 

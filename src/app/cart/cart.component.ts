@@ -21,7 +21,6 @@ export class CartComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private router: Router,
-    private cdr: ChangeDetectorRef,
     private authService: AuthService,
     private totalAmountService: PaymentService
   ) {}
@@ -66,9 +65,9 @@ export class CartComponent implements OnInit {
   }
 
   buyProduct() {
-if (this.authService.isSignedIn == true) {
+    if (this.authService.isSignedIn == true) {
       this.router.navigate(['/buy']);
-} else {
+    } else {
       this.router.navigate(['/auth']);
     }
   }
@@ -83,7 +82,6 @@ if (this.authService.isSignedIn == true) {
     const allSelected = this.cartItems.every((item) => item.selected);
     this.allSelected = allSelected;
     localStorage.setItem('select_all', JSON.stringify(this.allSelected));
-    this.cdr.detectChanges();
   }
 
   toggleAllSelections(): void {
@@ -105,6 +103,5 @@ if (this.authService.isSignedIn == true) {
         item.selected = JSON.parse(storedState);
       }
     });
-    this.cdr.detectChanges();
   }
 }

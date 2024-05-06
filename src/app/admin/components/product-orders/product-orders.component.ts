@@ -89,7 +89,6 @@ export class ProductOrdersComponent {
   }  
 
   sendNotificationToUser(userId: string, message: string) {
-    const userToken = 'user_fcm_token';
     this.afMessaging.requestToken.subscribe((token) => {
       this.afMessaging.requestToken.subscribe(
         (token) => {},

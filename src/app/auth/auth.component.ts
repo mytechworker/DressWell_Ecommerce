@@ -43,9 +43,9 @@ export class AuthComponent implements OnInit {
     }
   }
 
-  async onSignup(email: string, password: string, name: string) {
+  async onSignUp(email: string, password: string, name: string) {
     try {
-      await this.firebaseService.signup(email, password);
+      await this.firebaseService.signUp(email, password);
       if (this.firebaseService.isLoggedIn) {
         const user = JSON.parse(localStorage.getItem('user'));
         const userId = user.uid;
@@ -62,9 +62,9 @@ export class AuthComponent implements OnInit {
     }
   }
 
-  async onSignin(email: string, password: string) {
+  async onSignIn(email: string, password: string) {
     try {
-      await this.firebaseService.signin(email, password);
+      await this.firebaseService.signIn(email, password);
       if (this.firebaseService.isLoggedIn) {
         this.authService.updateAuthState(true);
         this.loginForm.reset();

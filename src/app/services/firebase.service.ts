@@ -37,14 +37,14 @@ export class FirebaseService {
     });
   }
 
-  async signin(email: string, password: string) {
+  async signIn(email: string, password: string) {
     await this.firebaseAuth.signInWithEmailAndPassword(email, password).then((res) => {
         this.isLoggedIn = true;
         localStorage.setItem('user', JSON.stringify(res.user));
       });
   }
 
-  async signup(email: string, password: string): Promise<any> {
+  async signUp(email: string, password: string): Promise<any> {
     try {
         const res = await this.firebaseAuth.createUserWithEmailAndPassword(
         email,

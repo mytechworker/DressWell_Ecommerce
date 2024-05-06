@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit {
       active: false,
     },
   ];
-  constructor(private orderService: OrderService) {}
+  constructor() {}
 
   changeRoute(index: number) {
     this.sidebarList.forEach((item: any, i: number) => {

@@ -76,7 +76,7 @@ export class UsersComponent {
     dialogRef.afterClosed().subscribe(async (result: UserResult) => {
       if (result && result.task) {
         try {
-          const authUser = await this.firebaseService.signup(
+          const authUser = await this.firebaseService.signUp(
             result.task.email,
             result.task.password
           );

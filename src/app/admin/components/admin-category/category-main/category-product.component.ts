@@ -61,26 +61,6 @@ export class CategoryProductComponent {
     });
   }
 
-  drop(event: any): void {
-    if (event.previousContainer === event.container) {
-      return;
-    }
-    const item = event.previousContainer.data[event.previousIndex];
-    this.store.firestore.runTransaction(() => {
-      const promise = Promise.all([
-        this.store.collection(event.previousContainer.id).doc(item.id).delete(),
-        this.store.collection(event.container.id).add(item),
-      ]);
-      return promise;
-    });
-    transferArrayItem(
-      event.previousContainer.data,
-      event.container.data,
-      event.previousIndex,
-      event.currentIndex
-    );
-  }
-
   newCategory(): void {
     const dialogRef = this.dialog.open(CategoryDetailsComponent, {
       width: 'auto',

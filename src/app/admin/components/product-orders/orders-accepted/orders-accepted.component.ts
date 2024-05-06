@@ -10,11 +10,9 @@ import { OrderService } from '../../../../services/orders.service';
 })
 export class OrdersAcceptedComponent {
   acceptedOrders$: Observable<Orders[]>;
-  groupedOrders$: Observable<any[]>;
   constructor(private ordersService: OrderService) { }
 
   ngOnInit() {
     this.acceptedOrders$ = this.ordersService.getAcceptedOrders();
-    this.groupedOrders$ = this.ordersService.getGroupedOrders();
   }
 }

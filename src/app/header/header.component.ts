@@ -28,7 +28,7 @@ const getObservable = (collection: AngularFirestoreCollection<Product>) => {
 })
 export class HeaderComponent implements OnInit {
   isAuthenticated: boolean;
-  configData;
+  configData: any;
   isSortMenuVisible: boolean;
   datasource: any;
   currentUser: UserDocument | null = null;
@@ -117,8 +117,6 @@ export class HeaderComponent implements OnInit {
       product.name.toLowerCase().includes(filterValue)
     );
   }
-
-  onSearchInput(event: any) {}
 
   displayProduct(product?: Product): string | undefined {
     return product ? product.name : undefined;
